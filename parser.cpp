@@ -9,6 +9,7 @@
 //External Files
 #include "parser.hpp"
 //#include "user.cpp"
+#define file "dataBase.txt"
 
 Parser::Parser(){}
 
@@ -22,6 +23,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 		return NULL;
 	}
 	
+	dataBase = fopen(file);
 	//tokenize
 	char* token = strtok(dataBase, " \t\n");
 
@@ -50,6 +52,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 				{
 					cout<< "wrong password try again" <<endl;
 					delete user;
+					fclose(dataBase);
 					return NULL;
 				}
 				char* token = strtok(dataBase, " \t\n");
@@ -60,7 +63,8 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 				user->setAccountNumber(token[1]);
 
 				///////////////* TODO SET SOCKET NUMBER */////////////////
-				
+				fclose(dataBase);
+				user->printUser();
 				return user; //username and password match return User class.
 			}
 			else	//if username does not match the username it progresses to the next one.
@@ -75,6 +79,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 		}
 	}
 	cout<< "User not found" <<endl;
+	fclose(dataBase)
 	return NULL; //if code gets here that means the user does not exist in the database.
 }
 

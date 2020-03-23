@@ -26,6 +26,7 @@ using namespace std;
 int main(int argc, char** argv) 
 {	
 	
+	checkLoginInfo("shane","1234");
 	
 	return 0;
 }
