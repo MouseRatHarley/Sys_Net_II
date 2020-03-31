@@ -12,6 +12,7 @@
 #include <thread>
 #include <mutex>          // std::mutex
 
+#include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
 
@@ -25,6 +26,8 @@ using namespace std;
 
 int main(int argc, char** argv) 
 {	
+	
+	menu();
 	
 	Parser* parser = new Parser();
 	parser->checkLoginInfo("shane","1234");
