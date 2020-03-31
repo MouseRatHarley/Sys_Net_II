@@ -105,7 +105,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 User* Parser::registerUser(char* username, char* password) {
 	
 	
-	fstream fp("dataBase.txt");
+	ifstream fp("dataBase.txt");
 	//fp.open();
 	char buff2[255];
 	
@@ -148,6 +148,8 @@ User* Parser::registerUser(char* username, char* password) {
 			
 		}
 	}
+	fp.close();
+	ofstream out("dataBase.txt", std::ios_base::app);
 	//username is not taken therefore create and populate User class.
 	User* user = new User();
 	user->setUsername(username);
@@ -156,6 +158,7 @@ User* Parser::registerUser(char* username, char* password) {
 	user->setAdmin(false);
 	/* TO DO add random number generator */
 	user->setAccountNumber(456785);	//random account number for now
-
+	out << username << "\t" << password << "\t" << "x" << "456785" << endl;
+	out.close();
 	return user;
 }
