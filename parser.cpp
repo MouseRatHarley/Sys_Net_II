@@ -80,7 +80,6 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 
 				///////////////* TODO SET SOCKET NUMBER */////////////////
 				
-				
 				fp.close();
 				user->printUser();
 				return user; //username and password match return User class.

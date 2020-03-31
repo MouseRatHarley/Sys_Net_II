@@ -21,7 +21,7 @@ void menu()
 {
 
 	char option;
-	do
+	while (option != '0')
 	{
 		clrscrn();
 		cout << "\tMenu\n";
@@ -34,7 +34,7 @@ void menu()
 		cout << "\t====================================\n\n";
 		cout << "\tEnter your selection: ";
 		cin >> option;
-		cout << endl;
+		//cout << endl;
 		switch (option)
 		{
 			case '1':
@@ -48,14 +48,15 @@ void menu()
 				registerUser();
 				break;
 			case '0':
-				cout << "Goodbye.\n";
-				break;
+				cout << "Exiting Chat Client\n";
+				exit(1);
 				
 			default: cout <<option << "is not a valid menu item.\n";
 				cout << endl;
 		}
-
-	}while (option != '0' );
+		
+	}
+	
 
 	
 }
@@ -77,8 +78,9 @@ void loginUser()
 	cout << "\tEnter Password: ";
 	cin >> password;
 	clrscrn();
-	
-	userType = parser->checkLoginInfo(username,password);
+	parser->checkLoginInfo(username,password);
+	getchar();
+	userType = verifyAdmin();
 	
 	clientMenu(userType);  //go to main menu for clients
 	
@@ -115,7 +117,7 @@ void clientMenu(bool admin)
 {
 
 	char option;
-		do
+		while(option != 9)
 		{
 			clrscrn();
 			cout << "\tClient Menu\n";
@@ -179,14 +181,14 @@ void clientMenu(bool admin)
 					break;
 				case '0':
 					cout << "\tLogin\n";
-					loginUser();
+					menu();
 					break;
 					
 				default: cout <<option << " is not a valid Selection\n";
 					cout << endl;
 			}
 
-		}while (option != '9' );
+		}
 
 }
 
@@ -275,17 +277,23 @@ void passwordRequest()
 
 }
 
-void verifyAdmin()
+bool verifyAdmin()
 {
-	char admin[MAX];
-	clrscrn();	
+	char admin;
+	//clrscrn();	
 	cout << "\t_________________________\n";
 	cout << "\tAre you admin? y/n: ";
 	cin >> admin;
-	
+	if (admin == 'y')
+	{
+		return true;
+	}
+	else 
+		return false;
 	if (cin.get() == '\n')
 	{
 		cout << "\teh im not getting paid for this go ahead\n\n";
+		return true;	
 	}
 	getchar();
 }

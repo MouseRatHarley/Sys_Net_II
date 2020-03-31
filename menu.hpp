@@ -12,6 +12,6 @@ void privateChat();
 void pullHistory();
 void FTP();
 void passwordRequest();
-void verifyAdmin();
+bool verifyAdmin();
 
 #endif

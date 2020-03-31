@@ -29,9 +29,9 @@ int main(int argc, char** argv)
 	
 	menu();
 	
-	Parser* parser = new Parser();
-	parser->checkLoginInfo("shane","1234");
-	parser->registerUser("XxSniperKillerxX","8560");
+	//Parser* parser = new Parser();
+	//parser->checkLoginInfo("shane","1234");
+	//parser->registerUser("XxSniperKillerxX","8560");
 	
 	return 0;
 }
