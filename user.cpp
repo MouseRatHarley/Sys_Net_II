@@ -23,7 +23,7 @@ User::User()
 		
 } 
 
-User::User (char* username, char* password, char admin, char* accountNumber)
+User::User(char* username, char* password, char admin, int accountNumber)
 {
 		_username = username;
 		_password = password;
@@ -42,15 +42,15 @@ void User::setUsername (char *username)
   
 void User::setPassword(char *password)
 {
-	_pasword = password;
+	_password = password;
 }
 
-void User::setAdmin(bool admin);
+void User::setAdmin(bool admin)
 {
 	_admin = admin;
 }
 
-void User::setAccountNumber(char *accountNumber)
+void User::setAccountNumber(int accountNumber)
 {
 	_accountNumber = accountNumber;
 }
@@ -59,8 +59,10 @@ void User::setAccountNumber(char *accountNumber)
 void User::printUser()    
 { 
 	cout << "username: [" << ((_username != NULL) ? _username : "NULL") << "]" << endl <<         
-			"password: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl;         
- 
+			"password: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
+ 			"accountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
+ 			"admin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 
+ 	
 }
 
 //GETTERS////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +76,7 @@ char* User::getPassword()
 	return _password;
 }
 
-char* User::getAdmin()
+bool User::getAdmin()
 {
 	return _admin;
 }
@@ -82,7 +84,7 @@ char* User::getAdmin()
 //PRINTERS///////////////////////////////////////////////////////////////////////////////////////
 void User::printFile()
 {
-	
+	/*
 	if(_argumentVector[1] == NULL)
 	{
 		return;
@@ -108,13 +110,13 @@ void User::printFile()
 	return;
 	//prints out file until it reaches the end
 	
-	
+	*/
 
 }
 
 void User::printDir()
 {
-	
+	/*
 	DIR*    dir;
 	dirent* pdir;
 	char* files[255];
@@ -151,10 +153,12 @@ void User::printDir()
 		}
 		cout<<endl;
 	}
+	*/
 }
 
 void User::grep()
 {
+	/*
 	ifstream fp (_argumentVector[3]);
 	string buffer;
 	char buff2[255];
@@ -186,7 +190,7 @@ void User::grep()
 		    }
 		}
 	}
-	
+	*/
 }
 
 //FLAGS//////////////////////////////////////////////////////////////////////////////////////////
