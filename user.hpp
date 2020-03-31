@@ -5,23 +5,23 @@
 
 class User { 
   private:      
-  char* _username;
-  char* _password;    
-	bool  _admin;                   /* admin identifier        */      
-	char* _acountNumber;            /* account number for the user */  
-  int   _socketNumber;    
+  	char* _username;
+  	char* _password;    
+  	bool  _admin;                   /* admin identifier        */      
+  	int _accountNumber;           /* account number for the user */  
+  	int   _socketNumber;    
 	
 	
   public: 
    //CONSTRUCTORS///////////////////////////////////////////////////
    User();
-   User (char* username, char* password, char admin, char* accountNumber);
+   User(char* username, char* password, char admin, int accountNumber);
    
    //SETTERS////////////////////////////////////////////////////////
    void setUsername (char *username);
    void setPassword(char *password);
    void setAdmin(bool admin);
-   void setAccountNumber(char *accountNumber);
+   void setAccountNumber(int accountNumber);
 
    //DEBUGGING//////////////////////////////////////////////////////
    void printUser();

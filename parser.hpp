@@ -9,6 +9,7 @@ class Parser{
 		Parser();
 		
 		User* checkLoginInfo(char* username, char* password);
+		User* registerUser(char* username, char* password);
 
 };
 

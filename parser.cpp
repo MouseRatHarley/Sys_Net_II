@@ -5,11 +5,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <fstream>
 
 //External Files
 #include "parser.hpp"
 //#include "user.cpp"
 #define file "dataBase.txt"
+
+using namespace std;
 
 Parser::Parser(){}
 
@@ -17,61 +20,76 @@ Parser::Parser(){}
 
 User* Parser::checkLoginInfo(char* username, char* password) {
 	
+	ifstream fp("dataBase.txt");
+	//fp.open();
+	char buff2[255];
+	
 	
 	// if no input 
-	if ((username == NULL)||(password == NULL) {
+	if ((username == NULL)||(password == NULL)){
 		return NULL;
 	}
 	
-	dataBase = fopen(file);
+
 	//tokenize
-	char* token = strtok(dataBase, " \t\n");
-
-	if (token == NULL) {
+	string buffer;
+	if(!fp.is_open())
+	{
 		return NULL;
 	}
 
-
-	
+	char* token;
 	int i = 0;
-	while (token != NULL) {
+	while (getline(fp,buffer)) {
 		
+		strcpy(buff2,buffer.c_str());
 		//checks username
 		if(i%3==0)
 		{
-			if(strcmp(token,username))
+			token = strtok(buff2, "\t\n");
+			if(!strcmp(token,username))
 			{
+				cout<<"USER FOUND"<<endl;
 				User* user = new User();
 				user->setUsername(username);
-				char* token = strtok(dataBase, " \t\n");
-				if(strcmp(token,password))
+				token = strtok(NULL, " \t\n");
+				if(!strcmp(token,password))
 				{
+					cout<<"PASSWORDS MATCH"<<endl;
 					user->setPassword(password);
 				}
 				else
 				{
 					cout<< "wrong password try again" <<endl;
 					delete user;
-					fclose(dataBase);
+					fp.close();
 					return NULL;
 				}
-				char* token = strtok(dataBase, " \t\n");
+				char* token = strtok(NULL, " \t\n");
 				if(token[0]=='A')
 				{
+					cout<<"WELCOME ADMIN"<<endl;
 					user->setAdmin(true);
-				}else user->setAdmin(false);
-				user->setAccountNumber(token[1]);
+				}
+				else 
+				{
+					cout<<"WELCOME USER"<<endl;
+					user->setAdmin(false);
+				}
+				user->setAccountNumber(atoi(&token[1]));
 
 				///////////////* TODO SET SOCKET NUMBER */////////////////
-				fclose(dataBase);
+				
+				
+				fp.close();
 				user->printUser();
 				return user; //username and password match return User class.
 			}
 			else	//if username does not match the username it progresses to the next one.
 			{
 			
-				char* token = strtok(dataBase, " \t\n");
-				char* token = strtok(dataBase, " \t\n");
+				token = strtok(buff2, " \t\n");
+				token = strtok(buff2, " \t\n");
 				i += 2;
 			
 			}
@@ -79,46 +97,51 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 		}
 	}
 	cout<< "User not found" <<endl;
-	fclose(dataBase)
+	fp.close();
 	return NULL; //if code gets here that means the user does not exist in the database.
+
 }
 
 User* Parser::registerUser(char* username, char* password) {
 	
 	
+	fstream fp("dataBase.txt");
+	//fp.open();
+	char buff2[255];
+	
 	// if no input 
-	if ((username == NULL)||(password == NULL) {
+	if ((username == NULL)||(password == NULL)){
 		return NULL;
 	}
 	
+
 	//tokenize
-	char* token = strtok(dataBase, " \t\n");
-
-	if (token == NULL) {
+	string buffer;
+	if(!fp.is_open())
+	{
 		return NULL;
 	}
 
-
-	
+	char* token;
 	int i = 0;
-	while (token != NULL) {
+	while (getline(fp,buffer)) {
 		
+		strcpy(buff2,buffer.c_str());
 		//checks username
 		if(i%3==0)
 		{
-			if(strcmp(token,username))
+			token = strtok(buff2, "\t\n");
+			if(!strcmp(token,username))
 			{
-				
 				cout<< "Username has been taken" <<endl;
-
-				return NULL; //Username exists therefore return NULL and let user try again.
-
+				fp.close();
+				return NULL; //Username exists therefore return NULL and let user try again
 			}
 			else	//if username does not match the username it progresses to the next one.
 			{
 			
-				char* token = strtok(dataBase, " \t\n");
-				char* token = strtok(dataBase, " \t\n");
+				token = strtok(NULL, " \t\n");
+				token = strtok(NULL, " \t\n");
 				i += 2;
 			
 			}
@@ -128,10 +151,11 @@ User* Parser::registerUser(char* username, char* password) {
 	//username is not taken therefore create and populate User class.
 	User* user = new User();
 	user->setUsername(username);
-	/* TO DO password checker if the password needs to have certain characters */
+	/* TO DO IF password checker if the password needs to have certain characters */
 	user->setPassword(password);
 	user->setAdmin(false);
 	/* TO DO add random number generator */
-	user->setAccountNumber("x743574");	//random account number for now
+	user->setAccountNumber(456785);	//random account number for now
 
+	return user;
 }
