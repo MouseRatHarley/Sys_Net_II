@@ -12,7 +12,6 @@
 #include <thread>
 #include <mutex>          // std::mutex
 
-#include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
 
@@ -27,13 +26,14 @@ using namespace std;
 int main(int argc, char** argv) 
 {	
 	
-	menu();
-	
-	//Parser* parser = new Parser();
-	//parser->checkLoginInfo("shane","1234");
-	//parser->registerUser("XxSniperKillerxX","8560");
+	Parser* parser = new Parser();
+	parser->registerUser("shane","123456");
+	parser->checkLoginInfo("shane","123456");
+	parser->registerUser("XxSniperKillerxX","8560");
+	parser->registerUser("DUDEBRO","8560");
+	parser->changePassword("XxSniperKillerxX","8560","7895");
+	//parser->deleteUser("XxSniperKillerxX","8560"); 
+	parser->banUser("DUDEBRO","8560");
 	
 	return 0;
 }
-
-

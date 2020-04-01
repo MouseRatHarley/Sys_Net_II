@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fstream>
+#include <iomanip>
 
 //External Files
 #include "parser.hpp"
@@ -24,12 +25,10 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 	//fp.open();
 	char buff2[255];
 	
-	
 	// if no input 
 	if ((username == NULL)||(password == NULL)){
 		return NULL;
 	}
-	
 
 	//tokenize
 	string buffer;
@@ -80,6 +79,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 
 				///////////////* TODO SET SOCKET NUMBER */////////////////
 				
+				
 				fp.close();
 				user->printUser();
 				return user; //username and password match return User class.
@@ -89,7 +89,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 			
 				token = strtok(buff2, " \t\n");
 				token = strtok(buff2, " \t\n");
-				i += 2;
+				i += 3;
 			
 			}
 			
@@ -113,7 +113,6 @@ User* Parser::registerUser(char* username, char* password) {
 		return NULL;
 	}
 	
-
 	//tokenize
 	string buffer;
 	if(!fp.is_open())
@@ -141,7 +140,7 @@ User* Parser::registerUser(char* username, char* password) {
 			
 				token = strtok(NULL, " \t\n");
 				token = strtok(NULL, " \t\n");
-				i += 2;
+				i += 3;
 			
 			}
 			
@@ -161,3 +160,103 @@ User* Parser::registerUser(char* username, char* password) {
 	out.close();
 	return user;
 }
+
+bool Parser::deleteUser(char* username, char* password)
+{
+	
+	string line;
+	string badUsername = string(username);
+	string badPassword = string(password);
+	string full = badUsername + "\t" + badPassword;
+	int i = 0;
+	ifstream myfile;
+	myfile.open("dataBase.txt");
+	ofstream temp;
+	temp.open("temp.txt");
+	while (getline(myfile, line))
+	{
+		//if the line does not match that means
+		//username and password do not match
+		//copy to temp file
+		if (line.substr(0,full.size()) != full)
+		{
+			temp << line << endl;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	
+	myfile.close();
+	temp.close();
+	remove("dataBase.txt");
+	rename("temp.txt", "dataBase.txt");
+	if(i==1)
+	{
+		cout << "The user with the name " << badUsername << " has been deleted." << endl;
+		return true;	
+	}
+	else return false;
+	
+	
+}
+
+bool Parser::changePassword(char* username, char* oldPassword, char* newPassword) 
+{
+	
+	
+	bool deletion = this->deleteUser(username,oldPassword);
+	if(deletion == false)
+	{
+		return false;
+	}
+	else
+	{
+		this->registerUser(username,newPassword);
+		return true;
+	}
+	
+}
+
+bool Parser::banUser(char* username, char* password)
+{
+	string line;
+	string badUsername = string(username);
+	string badPassword = string(password);
+	string full = badUsername + "\t" + badPassword;
+	
+	string bannedUser = badUsername + "\t" + badPassword + "\t" + "B666";
+	int i = 0;
+	ifstream myfile;
+	myfile.open("dataBase.txt");
+	ofstream temp;
+	temp.open("temp.txt");
+	while (getline(myfile, line))
+	{
+		//if the line does not match that means
+		//username and password do not match
+		//copy to temp file
+		if (line.substr(0,full.size()) != full)
+		{
+			temp << line << endl;
+		}
+		else
+		{
+			temp << bannedUser << endl;
+			i++;
+		}
+	}
+	
+	myfile.close();
+	temp.close();
+	remove("dataBase.txt");
+	rename("temp.txt", "dataBase.txt");
+	if(i==1)
+	{
+		cout << "The user with the name " << badUsername << " has been banned." << endl;
+		return true;	
+	}
+	else return false;
+}
+

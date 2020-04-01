@@ -1,4 +1,4 @@
-OBJS    = main.o user.o parser.o menu.o
+OBJS    = main.o user.o parser.o
 CXX     = g++
 DEBUG   = -g
 CXXFLAGS  = -Wall $(DEBUG) -std=c++11 -pthread
