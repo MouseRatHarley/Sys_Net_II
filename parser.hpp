@@ -10,7 +10,9 @@ class Parser{
 		
 		User* checkLoginInfo(char* username, char* password);
 		User* registerUser(char* username, char* password);
-
+		bool  deleteUser(char* username, char* password);
+		bool  changePassword(char* username, char* oldPassword, char* newPassword);
+		bool  banUser(char* username, char* password);
 };
 
 #endif
