@@ -1,6 +1,7 @@
 //libraries
 #include <iostream>
 #include <stdio.h>
+#include <string.h>
 #include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
@@ -254,7 +255,6 @@ void pullHistory()
 
 void FTP()
 {
-<<<<<<< HEAD
 	char option;
 	char fileLoc[MAX];
 	char userID[MAX];
@@ -308,12 +308,10 @@ void FTP()
 			}
 	}
 	
-=======
 	clrscrn();
 	cout << "\t_________________________\n";
 	cout << "\tFile Transfer\n\n";
 	getchar();
->>>>>>> d29820682c2d3513e91be5aa7b189442d7aa1c09
 	if (cin.get() == '\n')
 	{
 		cout << "\tNo File\n";
@@ -322,9 +320,11 @@ void FTP()
 }
 void passwordRequest()
 {
+	char oldPass[MAX];
+	char newPass[MAX];
+	char newPassConf[MAX];
 	clrscrn();	
 	cout << "\t_________________________\n";
-<<<<<<< HEAD
 	cout << "\tEnter Old Password: ";
 	cin >> oldPass;
 	cout << "\n\n";
@@ -349,10 +349,8 @@ void passwordRequest()
 	cout << "\tPasswords Match\n";
 	getchar();
 	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
-=======
 	cout << "\tLogin First";
 	getchar();
->>>>>>> d29820682c2d3513e91be5aa7b189442d7aa1c09
 	if (cin.get() == '\n')
 	{
 		loginUser();

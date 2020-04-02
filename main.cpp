@@ -14,7 +14,7 @@
 
 #include "user.hpp"
 #include "parser.hpp"
-
+#include "menu.hpp"
 #define BUFFER_SIZE 1024
 
 //g++ -std=c++11 -pthread Untitled1.cpp 
@@ -26,6 +26,7 @@ using namespace std;
 int main(int argc, char** argv) 
 {	
 	
+	menu();
 	Parser* parser = new Parser();
 	//parser->registerUser("shane","123456");
 	//parser->checkLoginInfo("shane","123456");
