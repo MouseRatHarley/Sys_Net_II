@@ -347,9 +347,9 @@ void passwordRequest()
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";
+	cout << "\tEnter to Login\n";
 	getchar();
 	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
-	cout << "\tLogin First";
 	getchar();
 	if (cin.get() == '\n')
 	{
