@@ -11,7 +11,6 @@
 //External Files
 #include "parser.hpp"
 //#include "user.cpp"
-#define file "dataBase.txt"
 
 using namespace std;
 
@@ -258,5 +257,29 @@ bool Parser::banUser(char* username, char* password)
 		return true;	
 	}
 	else return false;
+}
+
+void Parser::chatHistory(char* firstUser, char* secondUser)
+{
+	string line;
+	string first = string(firstUser);
+	string second = string(secondUser);
+	string fileName = first+second+".txt";
+	
+	ifstream myfile;
+	myfile.open(fileName);
+	if(!myfile.is_open())
+	{
+		cout << "no chat history\n";
+		return;
+	}
+	ofstream temp;
+	while (getline(myfile, line))
+	{
+		cout<<line<<endl;	
+	}
+	
+	myfile.close();
+	return;
 }
 

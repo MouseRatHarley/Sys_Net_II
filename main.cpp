@@ -27,13 +27,14 @@ int main(int argc, char** argv)
 {	
 	
 	Parser* parser = new Parser();
-	parser->registerUser("shane","123456");
-	parser->checkLoginInfo("shane","123456");
-	parser->registerUser("XxSniperKillerxX","8560");
-	parser->registerUser("DUDEBRO","8560");
-	parser->changePassword("XxSniperKillerxX","8560","7895");
+	//parser->registerUser("shane","123456");
+	//parser->checkLoginInfo("shane","123456");
+	//parser->registerUser("XxSniperKillerxX","8560");
+	//parser->registerUser("DUDEBRO","8560");
+	//parser->changePassword("XxSniperKillerxX","8560","7895");
 	//parser->deleteUser("XxSniperKillerxX","8560"); 
-	parser->banUser("DUDEBRO","8560");
+	//parser->banUser("DUDEBRO","8560");
+	parser->chatHistory("shane","DUDEBRO");
 	
 	return 0;
 }

@@ -13,6 +13,7 @@ class Parser{
 		bool  deleteUser(char* username, char* password);
 		bool  changePassword(char* username, char* oldPassword, char* newPassword);
 		bool  banUser(char* username, char* password);
+		void  chatHistory(char* firstUser, char* secondUser);
 };
 
 #endif
