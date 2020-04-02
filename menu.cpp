@@ -1,6 +1,7 @@
 //libraries
 #include <iostream>
 #include <stdio.h>
+#include <string.h>
 #include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
@@ -243,29 +244,37 @@ void privateChat()
 void pullHistory()
 {
 	char option;
-	clrscrn();	
-	cout << "\t_________________________\n";
-	cout << "\tChat History\n\n";
-	cout << "\t1. Group History\n";
-	cout << "\t2. Private History\n";
-	cout << "\t0. Return\n";
-	cin >> option;
-	while (option != 0)
+	while (option != 9)
 	{
-		switch(option)
-		{
-			case '1':
-				//get chat history
-				break;
-			case '2':
-				//get private history
-				break;
-			case '0':
-				break;
-			default:
-				cout << "\tnot a valid entry\n";
-				break;
-		}
+		clrscrn();	
+	
+		cout << "\t_________________________\n";
+		cout << "\tChat History\n\n";
+		cout << "\t1. Group History\n";
+		cout << "\t2. Private History\n\n\n";
+		cout << "\t0. Return\n";
+		cout << "\t====================================\n";
+		cout << "\tEnter your selection: ";
+		cin >> option;
+		
+			switch(option)
+			{
+				case '1':
+					//get chat historyi
+					cout << "\tPublic History:\n";
+					getchar();
+					break;
+				case '2':
+					//get private history
+					cout << "\tPrivate History:\n";
+					getchar();
+					break;
+				case '0':
+					return;
+				default:
+					cout << "\tnot a valid entry\n";
+					break;
+			}
 	}
 	if (cin.get() == '\n')
 	{
@@ -278,36 +287,42 @@ void FTP()
 	char option;
 	char fileLoc[MAX];
 	char userID[MAX];
-	clrscrn();
-	cout << "\t_________________________\n";
-	cout << "\tFile Transfer\n\n";
-	cout << "\t1. Select File to transfer:\n";
-	cout << "\t2. Select User to transfer to:\n";
-	cout << "\t0. Return\n";
-	cin >> option;
-	while (option != 0)
+	
+	while (option != 9)
 	{
-		switch(option)
-		{
-			case '1':
-				cout << "\tEnter File Location\n";
-				cout << "\tfolder/location/of/file.example\n\n";
-				cin >> fileLoc;
-				
-				//enter file location
-				break;
-			case '2':
-				cout << "\tTransfering file: " << fileLoc <<"\n\n";
-				cout << "Enter User ID to transfer file to:\n";
-				cin >> userID;
-				cout << "User ID: " << userID;
-				break;
-			case '0':
-				break;
-			default:
-				cout << "\tnot a valid entry\n";
-				break;
-		}
+	
+		clrscrn();
+		cout << "\t_________________________\n";
+		cout << "\tFile Transfer\n\n";
+		cout << "\t1. Select File to transfer:\n";
+		cout << "\t2. Select User to transfer to:\n";
+		cout << "\t0. Return\n";
+		cout << "\t====================================\n";
+		cout << "\tEnter your selection: ";
+		
+		cin >> option;
+			switch(option)
+			{
+				case '1':
+					cout << "\tEnter File Location\n";
+					cout << "\tfolder/location/of/file.example\n\n";
+					cin >> fileLoc;
+					
+					//enter file location
+					break;
+				case '2':
+					cout << "\tTransfering file: " << fileLoc <<"\n\n";
+					cout << "Enter User ID to transfer file to:\n";
+					cin >> userID;
+					cout << "User ID: " << userID;
+					//transferFile(fileLoc,userID);//file.cpp
+					break;
+				case '0':
+					return;
+				default:
+					cout << "\tnot a valid entry\n";
+					break;
+			}
 	}
 	
 	if (cin.get() == '\n')
@@ -318,10 +333,28 @@ void FTP()
 }
 void passwordRequest()
 {
+	char oldPass[MAX];
+	char newPass[MAX];
+	char newPassConf[MAX];
+	//bool changed;
+	//Parser* parser = new Parser();
+
 	clrscrn();	
 	cout << "\t_________________________\n";
-	cout << "\tLogin First";
-	getchar();
+	cout << "\tEnter Old Password: ";
+	cin >> oldPass;
+	cout << "\n\n";
+	do
+	{
+		cout << "\tEnter New Password: ";
+		cin >> newPass[MAX];
+		cout << "\tConfirm New Password: ";
+		cin >> newPassConf;
+	}while (strcmp(newPass,newPassConf)!=0);
+	
+	cout << "\tPasswords Match\n";
+
+	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
 	if (cin.get() == '\n')
 	{
 		loginUser();
