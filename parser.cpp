@@ -259,12 +259,24 @@ bool Parser::banUser(char* username, char* password)
 	else return false;
 }
 
+
 void Parser::chatHistory(char* firstUser, char* secondUser)
 {
+	
 	string line;
+	string fileName;
 	string first = string(firstUser);
 	string second = string(secondUser);
-	string fileName = first+second+".txt";
+	//returns 1 is firstUser is alphabetically less than second
+	if(bool(firstUser<secondUser)==0)
+	{
+		fileName = first+second+".txt";
+	}
+	else fileName = second+first+".txt";
+	if(fileName.size()==0)
+	{
+		return;
+	}
 	
 	ifstream myfile;
 	myfile.open(fileName);
@@ -281,5 +293,6 @@ void Parser::chatHistory(char* firstUser, char* secondUser)
 	
 	myfile.close();
 	return;
+	
 }
 
