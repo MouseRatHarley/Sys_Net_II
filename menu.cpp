@@ -1,7 +1,6 @@
 //libraries
 #include <iostream>
 #include <stdio.h>
-#include <string.h>
 #include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
@@ -233,7 +232,7 @@ void privateChat()
 	cout << "\t_________________________\n";
 	cout << "\tWelcome to Private Chat\n";
 	cout << "\n\n\n";
-	cout << "\tUsers:\n\n\n";
+	cout << "\tUsers here are:\n\n\n";
 	getchar();	
 	if (cin.get() == '\n')
 	{
@@ -243,39 +242,10 @@ void privateChat()
 
 void pullHistory()
 {
-	char option;
-	while (option != 9)
-	{
-		clrscrn();	
-	
-		cout << "\t_________________________\n";
-		cout << "\tChat History\n\n";
-		cout << "\t1. Group History\n";
-		cout << "\t2. Private History\n\n\n";
-		cout << "\t0. Return\n";
-		cout << "\t====================================\n";
-		cout << "\tEnter your selection: ";
-		cin >> option;
-		
-			switch(option)
-			{
-				case '1':
-					//get chat historyi
-					cout << "\tPublic History:\n";
-					getchar();
-					break;
-				case '2':
-					//get private history
-					cout << "\tPrivate History:\n";
-					getchar();
-					break;
-				case '0':
-					return;
-				default:
-					cout << "\tnot a valid entry\n";
-					break;
-			}
-	}
+	clrscrn();	
+	cout << "\t_________________________\n";
+	cout << "\tGetting Chat History\n\n";
+	getchar();
 	if (cin.get() == '\n')
 	{
 		cout << "\tNo History\n";
@@ -284,6 +254,7 @@ void pullHistory()
 
 void FTP()
 {
+<<<<<<< HEAD
 	char option;
 	char fileLoc[MAX];
 	char userID[MAX];
@@ -337,6 +308,12 @@ void FTP()
 			}
 	}
 	
+=======
+	clrscrn();
+	cout << "\t_________________________\n";
+	cout << "\tFile Transfer\n\n";
+	getchar();
+>>>>>>> d29820682c2d3513e91be5aa7b189442d7aa1c09
 	if (cin.get() == '\n')
 	{
 		cout << "\tNo File\n";
@@ -345,14 +322,9 @@ void FTP()
 }
 void passwordRequest()
 {
-	char oldPass[MAX];
-	char newPass[MAX];
-	char newPassConf[MAX];
-	//bool changed;
-	//Parser* parser = new Parser();
-
 	clrscrn();	
 	cout << "\t_________________________\n";
+<<<<<<< HEAD
 	cout << "\tEnter Old Password: ";
 	cin >> oldPass;
 	cout << "\n\n";
@@ -377,6 +349,10 @@ void passwordRequest()
 	cout << "\tPasswords Match\n";
 	getchar();
 	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
+=======
+	cout << "\tLogin First";
+	getchar();
+>>>>>>> d29820682c2d3513e91be5aa7b189442d7aa1c09
 	if (cin.get() == '\n')
 	{
 		loginUser();
@@ -399,7 +375,7 @@ bool verifyAdmin()
 		return false;
 	if (cin.get() == '\n')
 	{
-		cout << "\teh im not getting paid for this, go ahead\n\n";
+		cout << "\teh im not getting paid for this go ahead\n\n";
 		return true;	
 	}
 	getchar();
