@@ -304,17 +304,29 @@ void FTP()
 			switch(option)
 			{
 				case '1':
-					cout << "\tEnter File Location\n";
+					clrscrn();
+					cout << "\tEnter File Location as \n";
 					cout << "\tfolder/location/of/file.example\n\n";
+					cout << "\t====================================\n";
+					cout << "\tFile Location: ";
 					cin >> fileLoc;
 					
 					//enter file location
 					break;
 				case '2':
+					clrscrn();
 					cout << "\tTransfering file: " << fileLoc <<"\n\n";
-					cout << "Enter User ID to transfer file to:\n";
+					cout << "\tEnter User ID to transfer file to:\n";
+					cout << "\t====================================\n";
+					cout << "\tUser ID: ";
+					
 					cin >> userID;
-					cout << "User ID: " << userID;
+					clrscrn();
+					cout << "\tUser ID: " << userID;
+					cout << "\n";
+					cout << "\tTransfering: " << fileLoc;
+					getchar();
+					getchar();
 					//transferFile(fileLoc,userID);//file.cpp
 					break;
 				case '0':
@@ -346,14 +358,24 @@ void passwordRequest()
 	cout << "\n\n";
 	do
 	{
+		clrscrn();
 		cout << "\tEnter New Password: ";
-		cin >> newPass[MAX];
+		cin >> newPass;
+		cout << "\n";
 		cout << "\tConfirm New Password: ";
 		cin >> newPassConf;
+		if(strcmp(newPass,newPassConf) != 0)
+		{
+			clrscrn();
+			cout << "\tPasswords Do Not Match:\n\tPlease Try again.\n";
+			cout << "\tEnter to continue: ";
+			getchar();
+			getchar();
+		}
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";
-
+	getchar();
 	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
 	if (cin.get() == '\n')
 	{
