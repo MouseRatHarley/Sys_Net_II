@@ -232,7 +232,7 @@ void privateChat()
 	cout << "\t_________________________\n";
 	cout << "\tWelcome to Private Chat\n";
 	cout << "\n\n\n";
-	cout << "\tUsers here are:\n\n\n";
+	cout << "\tUsers:\n\n\n";
 	getchar();	
 	if (cin.get() == '\n')
 	{
@@ -242,10 +242,31 @@ void privateChat()
 
 void pullHistory()
 {
+	char option;
 	clrscrn();	
 	cout << "\t_________________________\n";
-	cout << "\tGetting Chat History\n\n";
-	getchar();
+	cout << "\tChat History\n\n";
+	cout << "\t1. Group History\n";
+	cout << "\t2. Private History\n";
+	cout << "\t0. Return\n";
+	cin >> option;
+	while (option != 0)
+	{
+		switch(option)
+		{
+			case '1':
+				//get chat history
+				break;
+			case '2':
+				//get private history
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\tnot a valid entry\n";
+				break;
+		}
+	}
 	if (cin.get() == '\n')
 	{
 		cout << "\tNo History\n";
@@ -254,10 +275,41 @@ void pullHistory()
 
 void FTP()
 {
+	char option;
+	char fileLoc[MAX];
+	char userID[MAX];
 	clrscrn();
 	cout << "\t_________________________\n";
 	cout << "\tFile Transfer\n\n";
-	getchar();
+	cout << "\t1. Select File to transfer:\n";
+	cout << "\t2. Select User to transfer to:\n";
+	cout << "\t0. Return\n";
+	cin >> option;
+	while (option != 0)
+	{
+		switch(option)
+		{
+			case '1':
+				cout << "\tEnter File Location\n";
+				cout << "\tfolder/location/of/file.example\n\n";
+				cin >> fileLoc;
+				
+				//enter file location
+				break;
+			case '2':
+				cout << "\tTransfering file: " << fileLoc <<"\n\n";
+				cout << "Enter User ID to transfer file to:\n";
+				cin >> userID;
+				cout << "User ID: " << userID;
+				break;
+			case '0':
+				break;
+			default:
+				cout << "\tnot a valid entry\n";
+				break;
+		}
+	}
+	
 	if (cin.get() == '\n')
 	{
 		cout << "\tNo File\n";
@@ -292,7 +344,7 @@ bool verifyAdmin()
 		return false;
 	if (cin.get() == '\n')
 	{
-		cout << "\teh im not getting paid for this go ahead\n\n";
+		cout << "\teh im not getting paid for this, go ahead\n\n";
 		return true;	
 	}
 	getchar();
