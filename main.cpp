@@ -14,6 +14,7 @@
 
 #include "user.hpp"
 #include "parser.hpp"
+#include "menu.hpp"
 
 #define BUFFER_SIZE 1024
 
@@ -26,6 +27,9 @@ using namespace std;
 int main(int argc, char** argv) 
 {	
 	
+	menu();
+	
+	/*
 	Parser* parser = new Parser();
 	parser->registerUser("shane","123456");
 	parser->checkLoginInfo("shane","123456");
@@ -34,6 +38,6 @@ int main(int argc, char** argv)
 	parser->changePassword("XxSniperKillerxX","8560","7895");
 	//parser->deleteUser("XxSniperKillerxX","8560"); 
 	parser->banUser("DUDEBRO","8560");
-	
+	*/
 	return 0;
 }
