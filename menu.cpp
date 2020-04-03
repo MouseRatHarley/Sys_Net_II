@@ -69,7 +69,8 @@ void loginUser()
 	char username[MAX];
 	char password[MAX];
 	bool userType;
-	
+	char * usern;	
+	User* user = new User();	
 	Parser* parser = new Parser();
 	cout << "\tLogin\n";
 	cout << "\t++++++++++++++++++++++++++++++++++++++++++\n";
@@ -81,8 +82,13 @@ void loginUser()
 	clrscrn();
 	parser->checkLoginInfo(username,password);
 	getchar();
-	userType = verifyAdmin();
-	
+	getchar();
+	usern = user->getUsername();
+	userType = user->getAdmin();
+	cout << userType;
+	cout << usern;
+	getchar();
+	getchar();
 	clientMenu(userType);  //go to main menu for clients
 	
 }

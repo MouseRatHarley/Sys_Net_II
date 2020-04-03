@@ -29,13 +29,13 @@ int main(int argc, char** argv)
 	menu();
 	Parser* parser = new Parser();
 	//parser->registerUser("shane","123456");
-	//parser->checkLoginInfo("shane","123456");
-	//parser->registerUser("XxSniperKillerxX","8560");
-	//parser->registerUser("DUDEBRO","8560");
-	//parser->changePassword("XxSniperKillerxX","8560","7895");
-	//parser->deleteUser("XxSniperKillerxX","8560"); 
-	//parser->banUser("DUDEBRO","8560");
-	parser->chatHistory("godwashere","DoodleBob");
+	//parser->checkLoginInfo("shane","123456"); 			####IMPLEMENTED IN MENU
+	//parser->registerUser("XxSniperKillerxX","8560");   		####IMPLEMENTED IN MENU
+	//parser->registerUser("DUDEBRO","8560");			####
+	//parser->changePassword("XxSniperKillerxX","8560","7895");	####
+	//parser->deleteUser("XxSniperKillerxX","8560"); 		####
+	//parser->banUser("DUDEBRO","8560");				####
+	parser->chatHistory("godwashere","DoodleBob");		//	####	
 	
 	return 0;
 }

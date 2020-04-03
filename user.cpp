@@ -58,10 +58,10 @@ void User::setAccountNumber(int accountNumber)
 //DEBUGGING////////////////////////////////////////////////////////////////////////////////////////
 void User::printUser()    
 { 
-	cout << "username: [" << ((_username != NULL) ? _username : "NULL") << "]" << endl <<         
-			"password: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
- 			"accountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
- 			"admin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 
+	cout << "\tusername: [" << ((_username != NULL) ? _username : "NULL") << "]" << endl <<         
+			"\tpassword: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
+ 			"\taccountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
+ 			"\tadmin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 
  	
 }
 

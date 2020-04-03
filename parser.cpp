@@ -47,18 +47,18 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 			token = strtok(buff2, "\t\n");
 			if(!strcmp(token,username))
 			{
-				cout<<"USER FOUND"<<endl;
+				cout<<"\tUSER FOUND"<<endl;
 				User* user = new User();
 				user->setUsername(username);
 				token = strtok(NULL, " \t\n");
 				if(!strcmp(token,password))
 				{
-					cout<<"PASSWORDS MATCH"<<endl;
+					cout<<"\tPASSWORDS MATCH"<<endl;
 					user->setPassword(password);
 				}
 				else
 				{
-					cout<< "wrong password try again" <<endl;
+					cout<< "\tWrong password try again" <<endl;
 					delete user;
 					fp.close();
 					return NULL;
@@ -66,12 +66,12 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 				char* token = strtok(NULL, " \t\n");
 				if(token[0]=='A')
 				{
-					cout<<"WELCOME ADMIN"<<endl;
+					cout<<"\tWELCOME ADMIN"<<endl;
 					user->setAdmin(true);
 				}
 				else 
 				{
-					cout<<"WELCOME USER"<<endl;
+					cout<<"\tWELCOME USER"<<endl;
 					user->setAdmin(false);
 				}
 				user->setAccountNumber(atoi(&token[1]));
@@ -94,7 +94,7 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 			
 		}
 	}
-	cout<< "User not found" <<endl;
+	cout<< "\tUser not found" <<endl;
 	fp.close();
 	return NULL; //if code gets here that means the user does not exist in the database.
 
@@ -130,7 +130,7 @@ User* Parser::registerUser(char* username, char* password) {
 			token = strtok(buff2, "\t\n");
 			if(!strcmp(token,username))
 			{
-				cout<< "Username has been taken" <<endl;
+				cout<< "\tUsername has been taken" <<endl;
 				fp.close();
 				return NULL; //Username exists therefore return NULL and let user try again
 			}
@@ -193,7 +193,7 @@ bool Parser::deleteUser(char* username, char* password)
 	rename("temp.txt", "dataBase.txt");
 	if(i==1)
 	{
-		cout << "The user with the name " << badUsername << " has been deleted." << endl;
+		cout << "\tThe user with the name " << badUsername << " has been deleted." << endl;
 		return true;	
 	}
 	else return false;
@@ -253,7 +253,7 @@ bool Parser::banUser(char* username, char* password)
 	rename("temp.txt", "dataBase.txt");
 	if(i==1)
 	{
-		cout << "The user with the name " << badUsername << " has been banned." << endl;
+		cout << "\tThe user with the name " << badUsername << " has been banned." << endl;
 		return true;	
 	}
 	else return false;
@@ -282,7 +282,7 @@ void Parser::chatHistory(char* firstUser, char* secondUser)
 	myfile.open(fileName);
 	if(!myfile.is_open())
 	{
-		cout << "no chat history\n";
+		cout << "\tNo chat history\n";
 		return;
 	}
 	ofstream temp;
