@@ -5,13 +5,13 @@ void clrscrn();
 void menu();
 void registerUser();
 void loginUser();
-void clientMenu(bool admin);
+void clientMenu(char* username, bool admin);
 void displayUsers();
-void groupChat();
-void privateChat();
-void pullHistory();
+void groupChat(char* username);
+void privateChat(char* username);
+void pullHistory(char* username);
 void FTP();
-void passwordRequest();
-bool verifyAdmin();
+void passwordRequest(char* username);
+bool verifyAdmin(char* username);
 
 #endif

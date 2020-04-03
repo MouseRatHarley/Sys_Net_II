@@ -13,6 +13,7 @@ void clrscrn()
 	cout << "\033[2J\033[1;1H";
 	cout << "\n\n\n";
 	cout << "\tChat Client\n";
+	cout << "\tUser: " << "\n";
 	cout << "\tStatus -- \n\n\n\n\n";
 	cout << "\t++++++++++++++++++++++++++++++++++++++++++\n";
 
@@ -49,7 +50,7 @@ void menu()
 				registerUser();
 				break;
 			case '0':
-				cout << "Exiting Chat Client\n";
+				cout << "\n\n\tExiting Chat Client\n";
 				exit(1);
 				
 			default: cout <<option << "is not a valid menu item.\n";
@@ -70,8 +71,10 @@ void loginUser()
 	char password[MAX];
 	bool userType;
 	char * usern;	
-	User* user = new User();	
-	Parser* parser = new Parser();
+	//char * loginfo;
+	//User* user;
+	
+
 	cout << "\tLogin\n";
 	cout << "\t++++++++++++++++++++++++++++++++++++++++++\n";
 	cout << "\tEnter Username: ";
@@ -79,17 +82,25 @@ void loginUser()
 	clrscrn();
 	cout << "\tEnter Password: ";
 	cin >> password;
+	
+	Parser* parser = new Parser();
+	User* user = new User();
 	clrscrn();
-	parser->checkLoginInfo(username,password);
+	
+	user = parser->checkLoginInfo(username,password);
+		
 	getchar();
 	getchar();
+	
 	usern = user->getUsername();
 	userType = user->getAdmin();
-	cout << userType;
-	cout << usern;
+	
+	cout << userType << endl << usern;
+	
 	getchar();
 	getchar();
-	clientMenu(userType);  //go to main menu for clients
+	
+	clientMenu(username,userType);  //go to main menu for clients
 	
 }
 
@@ -102,6 +113,7 @@ void registerUser()
 	clrscrn();
 	char  username[MAX];
 	char  password[MAX];
+	
 	cout << "\tRegister User\n";
 	cout << "\tEnter Username: ";
 	cin >> username;
@@ -110,6 +122,7 @@ void registerUser()
 	cin >> password;
 	clrscrn();
 	Parser* parser = new Parser();
+	
 	parser->registerUser(username,password);
 	clrscrn();
 	cout << "\n\n\n";
@@ -120,7 +133,7 @@ void registerUser()
 }
 
 
-void clientMenu(bool admin)
+void clientMenu(char* username, bool admin)
 {
 
 	char option;
@@ -153,15 +166,15 @@ void clientMenu(bool admin)
 					break;
 				case '2':
 					cout << "\tGroup Chat\n\n";
-					groupChat();
+					groupChat(username);
 					break;				
 				case '3':
 					cout << "\tPrivate Chat\n\n";
-					privateChat();
+					privateChat(username);
 					break;
 				case '4':
 					cout << "\tChat History\n\n";
-					pullHistory();
+					pullHistory(username);
 					break;
 				case '5':
 					cout << "\tFile Transfer\n\n";
@@ -169,7 +182,7 @@ void clientMenu(bool admin)
 					break;
 				case '6':
 					cout << "\tChange Password\n";
-					passwordRequest();
+					passwordRequest(username);
 					break;
 				case '7':
 					cout << "\tLogout\n";
@@ -180,7 +193,7 @@ void clientMenu(bool admin)
 					if (admin == true)
 					{
 						cout << "\tAdministrator\n";
-						verifyAdmin();
+						verifyAdmin(username);
 						break;
 					}
 					else
@@ -219,7 +232,7 @@ void displayUsers()
 	}
 
 }
-void groupChat()
+void groupChat(char* username)
 {
 	clrscrn();
 	cout << "\t_________________________\n";
@@ -232,7 +245,7 @@ void groupChat()
 	}
 }
 
-void privateChat()
+void privateChat(char* username)
 {
 	
 	clrscrn();
@@ -247,7 +260,7 @@ void privateChat()
 	}
 }
 
-void pullHistory()
+void pullHistory(char* username)
 {
 	clrscrn();	
 	cout << "\t_________________________\n";
@@ -324,11 +337,13 @@ void FTP()
 	}
 
 }
-void passwordRequest()
+void passwordRequest(char* username)
 {
 	char oldPass[MAX];
 	char newPass[MAX];
 	char newPassConf[MAX];
+	bool changed;
+	Parser* parser;
 	clrscrn();	
 	cout << "\t_________________________\n";
 	cout << "\tEnter Old Password: ";
@@ -353,18 +368,20 @@ void passwordRequest()
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";
-	cout << "\tEnter to Login\n";
+	
+	changed = parser->changePassword(username, oldPass, newPass);
 	getchar();
-	//changed = parser->changePassword(char* username,char* oldPass, char* newPass);
-	getchar();
-	if (cin.get() == '\n')
+	
+	if (changed == true)
 	{
 		loginUser();
 	}
+	else
+		return;
 
 }
 
-bool verifyAdmin()
+bool verifyAdmin(char* username)
 {
 	char admin;
 	//clrscrn();	

@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	//parser->checkLoginInfo("shane","123456"); 			####IMPLEMENTED IN MENU
 	//parser->registerUser("XxSniperKillerxX","8560");   		####IMPLEMENTED IN MENU
 	//parser->registerUser("DUDEBRO","8560");			####
-	//parser->changePassword("XxSniperKillerxX","8560","7895");	####
+	//parser->changePassword("XxSniperKillerxX","8560","7895");	####IMPLEMENTED IN MENU
 	//parser->deleteUser("XxSniperKillerxX","8560"); 		####
 	//parser->banUser("DUDEBRO","8560");				####
 	parser->chatHistory("godwashere","DoodleBob");		//	####	
