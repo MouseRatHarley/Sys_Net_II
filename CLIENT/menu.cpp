@@ -2,10 +2,10 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+
 #include "menu.hpp"
-#include "user.hpp"
-#include "parser.hpp"
 #include "client.hpp"
+
 #define MAX 255
 
 using namespace std;
@@ -20,9 +20,9 @@ void clrscrn()
 
 }
 
+
 void menu()
 {
-
 	char option;
 	while (option != '0')
 	{
@@ -41,13 +41,13 @@ void menu()
 		switch (option)
 		{
 			case '1':
-				cout << "Register\n";
-				cout << "\n";
+				//cout << "\n";
+				//cout << "\n";
 				loginUser();
 				break;
 			case '2':
-				cout << "\n";
-				cout << "\n";
+				//cout << "\n";
+				//cout << "\n";
 				registerUser();
 				break;
 			case '0':
@@ -60,21 +60,24 @@ void menu()
 		
 	}
 	
-
-	
 }
+
+
 void loginUser()
 {
 	//call login here
-	//call server with L0+USERNAME+PASSWORD+
+	//call server with L0+USERNAME+PASSWORD+		
+	
 	clrscrn();
 	char username[MAX];
 	char password[MAX];
 	bool userType;
-	char * usern;	
-	//char * loginfo;
+	//char * usern;	
+	int sockfd;	
+	char loginfo[MAX];
 	//User* user;
 	
+	sockfd = connectToServer();
 
 	cout << "\tLogin\n";
 	cout << "\t++++++++++++++++++++++++++++++++++++++++++\n";
@@ -84,22 +87,24 @@ void loginUser()
 	cout << "\tEnter Password: ";
 	cin >> password;
 	
-	Parser* parser = new Parser();
-	User* user = new User();
-	clrscrn();
+	strcpy(loginfo,"L0");
+	strcat(loginfo,"%");
+	strcat(loginfo,username);
+	strcat(loginfo,"%");
+	strcat(loginfo,password);
+	strcat(loginfo,"%");
 	
-	user = parser->checkLoginInfo(username,password);
-		
+	cout << loginfo << endl;
+	
+	serv(sockfd, loginfo);
+
+	//send(sd,loginfo,sizeof(loginfo));
+
 	getchar();
 	getchar();
+
 	
-	usern = user->getUsername();
-	userType = user->getAdmin();
 	
-	cout << userType << endl << usern;
-	
-	getchar();
-	getchar();
 	
 	clientMenu(username,userType);  //go to main menu for clients
 	
@@ -121,10 +126,7 @@ void registerUser()
 	clrscrn();
 	cout << "\tEnter Password: ";
 	cin >> password;
-	clrscrn();
-	Parser* parser = new Parser();
 	
-	parser->registerUser(username,password);
 	clrscrn();
 	cout << "\n\n\n";
 	cout << "\tUser Registered\n\n";
@@ -137,7 +139,6 @@ void registerUser()
 void clientMenu(char* username, bool admin)
 {
 
-	connectToServer();
 	
 	char option;
 		while(option != 9)
@@ -235,6 +236,7 @@ void displayUsers()
 	}
 
 }
+
 void groupChat(char* username)
 {
 	clrscrn();
@@ -242,6 +244,7 @@ void groupChat(char* username)
 	cout << "\tWelcome to Group Chat\n";
 	cout << "\n\n\n";
 	getchar();
+	
 	if (cin.get() == '\n')
 	{
 		cout << "\tChatting \n\n\n";
@@ -263,6 +266,7 @@ void privateChat(char* username)
 	}
 }
 
+
 void pullHistory(char* username)
 {
 	clrscrn();	
@@ -274,6 +278,7 @@ void pullHistory(char* username)
 		cout << "\tNo History\n";
 	}
 }
+
 
 void FTP()
 {
@@ -340,13 +345,15 @@ void FTP()
 	}
 
 }
+
+
 void passwordRequest(char* username)
 {
 	char oldPass[MAX];
 	char newPass[MAX];
 	char newPassConf[MAX];
 	bool changed;
-	Parser* parser;
+	//Parser* parser;
 	clrscrn();	
 	cout << "\t_________________________\n";
 	cout << "\tEnter Old Password: ";
@@ -372,7 +379,7 @@ void passwordRequest(char* username)
 	
 	cout << "\tPasswords Match\n";
 	
-	changed = parser->changePassword(username, oldPass, newPass);
+	//changed = parser->changePassword(username, oldPass, newPass);
 	getchar();
 	
 	if (changed == true)
@@ -383,6 +390,7 @@ void passwordRequest(char* username)
 		return;
 
 }
+
 
 bool verifyAdmin(char* username)
 {
@@ -404,25 +412,6 @@ bool verifyAdmin(char* username)
 	}
 	getchar();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -8,13 +8,18 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <iostream>
+#include "menu.hpp"
 
-#define MAX 2048
+#define RSIZE 1025
+#define MAXS 2048
 #define PORT 60001 
 #define SA struct sockaddr 
 
 
 using namespace std;
+
+
+
 
 /****************************
 **Function 	serv
@@ -24,52 +29,56 @@ using namespace std;
 **
 */
 
-void serv (int sockfd) 
+void serv (int sockfd, char* loginfo) 
 { 
-	char buff[MAX]; 
+	char buff[MAXS]; 
 	int connfd,n; 
 	char *MET[50];
 	char *pch;
 	int i;	
 	struct sockaddr_in servaddr;
 	
-	printf("[CLIENT] USAGE: GET /src/file.bin\n\n");
-	for (;;) 
-	{ 
+	//printf("[CLIENT] USAGE: GET /src/file.bin\n\n");
+	//for (;;) 
+	//{ 
 		connfd = connect(sockfd, (SA*)&servaddr, sizeof(servaddr)); 
+		//clientMenu();
 		
-		printf("[CLIENT]: "); 
-		n = 0; 
-		while ((buff[n++] = getchar()) != '\n') ; 
-		write(sockfd, buff, sizeof(buff)); 
+		//printf("[CLIENT]: "); 
+		//n = 0; 
+		//while ((buff[n++] = getchar()) != '\n') ; 
+		cout << loginfo << endl;
 		
-		pch = strtok(buff, " ");
-		i = 0;
-		while (pch != NULL)
-		{
-			MET[i] = pch;
-			pch = strtok (NULL," ");
+		send(sockfd, loginfo, RSIZE,0);
+
+		//send(sockfd,"\n",3,0);	
+		//pch = strtok(buff, " ");
+		//i = 0;
+		//while (pch != NULL)
+		//{
+		//	MET[i] = pch;
+		//	pch = strtok (NULL," ");
 			//printf("TOK[%d]:%s\n",i,MET[i]); //For printing tokens of the http header from client
-			i++;
-		}
+		//	i++;
+		//}
 		
 		
-		bzero(buff, sizeof(buff)); // clear buffer after sending client response
+		bzero(loginfo, sizeof(loginfo)); // clear buffer after sending client response
 		
-		read(sockfd, buff, sizeof(buff)); //read server response
-		printf("[SERVER]: %s\n", buff); 
+		//read(sockfd, buff, sizeof(buff)); //read server response
+		//printf("[SERVER]: %s\n", buff); 
 		
-		if ((strncmp(buff, "exit", 4)) == 0) 
-		{ 
-			printf("Closing Client\n"); 
-			break; 
-		}
-		close(connfd);
-	} 
+		//if ((strncmp(buff, "exit", 4)) == 0) 
+		//{ 
+		//	printf("Closing Client\n"); 
+		//	break; 
+	//	}
+		//close(connfd);
+	//}
 } 
 
 
-void connectToServer()
+int connectToServer()
 {
 	int sockfd;
 	struct sockaddr_in servaddr;
@@ -94,8 +103,10 @@ void connectToServer()
 	}
 	else
 		cout << "\tConnected at " << PORT << endl;
-
-	serv(sockfd);
-	close(sockfd);
+	
+	//serv(sockfd);
+	
+	//close(sockfd);
+	return sockfd;
 }
 

@@ -10,7 +10,7 @@
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros 
 #include <iostream>	
 #include "multiServer.hpp"
-
+#include "parser.hpp"
 #define TRUE 1 
 #define FALSE 0 
 #define PORT 60001 
@@ -30,7 +30,7 @@ int server(int argc , char *argv[])
 	fd_set readfds; 
 
 	//a message 
-	char *message = "ECHO Daemon v1.0 \r\n"; 
+	char *message = "Im a Server \r\n"; 
 
 	//initialise all client_socket[] to 0 so not checked 
 	for (i = 0; i < max_clients; i++) 
@@ -172,14 +172,18 @@ int server(int argc , char *argv[])
 					//set the string terminating NULL byte on the end 
 					//of the data read 
 					
-					buffer[valread] = '\0'; 
+					getpeername(sd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
 					
+					cout << "USER " << ntohs(address.sin_port);
+						
+					//buffer[valread] = '\0'; 
+					cout << " " << buffer << endl;
 					direct(sd,buffer);
 
 					send(sd , buffer, strlen(buffer) , 0 ); 
-					
-				
-				
+					bzero(buffer,sizeof(MAX));
+					//bzero(buffer,MAX);			
+					//close(sd);	
 				} 
 			} 
 		} 
@@ -196,8 +200,9 @@ void direct(int sd,char buffer[MAX])
 	char* MET[50];
 	char* pch;
 	int i = 0;
+	Parser* parser = new Parser;
 	pch = strtok((char*)buffer,"%");
-	while (pch != NULL)\
+	while (pch != NULL)
 	{
 		MET[i] = pch;
 		pch = strtok(NULL,"%");
@@ -206,11 +211,25 @@ void direct(int sd,char buffer[MAX])
 	if(strncmp("L0",MET[0],2) == 0)
 	{
 		
-		send(sd,"LOGIN",15,0);
+		cout << "LOGIN\n";
+		parser->checkLoginInfo(MET[1],MET[2]);
+		//send(sd,"LOGIN",8,0);
+		bzero(buffer,sizeof(MAX));
 	}
-	else
-		send(sd,"NOT RECOGNIZED.",16,0);
+	else if(strncmp("R0",MET[0],2) == 0)
+	{
 
+		send(sd,"REGISTER",9,0);
+		bzero(buffer,sizeof(MAX));
+	}
+	
+	
+	
+	
+	
+	
+	
+		
 }
 
 
