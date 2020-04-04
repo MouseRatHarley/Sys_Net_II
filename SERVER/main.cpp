@@ -14,7 +14,7 @@
 
 #include "user.hpp"
 #include "parser.hpp"
-#include "menu.hpp"
+#include "multiServer.hpp"
 #define BUFFER_SIZE 1024
 
 //g++ -std=c++11 -pthread Untitled1.cpp 
@@ -26,8 +26,9 @@ using namespace std;
 int main(int argc, char** argv) 
 {	
 	
-	menu();
-	Parser* parser = new Parser();
+	server(argc,argv);
+	//menu();
+	//Parser* parser = new Parser();
 	//parser->registerUser("shane","123456");
 	//parser->checkLoginInfo("shane","123456"); 			####IMPLEMENTED IN MENU
 	//parser->registerUser("XxSniperKillerxX","8560");   		####IMPLEMENTED IN MENU
@@ -35,7 +36,7 @@ int main(int argc, char** argv)
 	//parser->changePassword("XxSniperKillerxX","8560","7895");	####IMPLEMENTED IN MENU
 	//parser->deleteUser("XxSniperKillerxX","8560"); 		####
 	//parser->banUser("DUDEBRO","8560");				####
-	parser->chatHistory("godwashere","DoodleBob");		//	####	
+	//parser->chatHistory("godwashere","DoodleBob");		//	####	
 	
 	return 0;
 }

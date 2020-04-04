@@ -12,7 +12,7 @@
 #include <sys/sendfile.h>
 #include <sys/stat.h>
 
-#include "server.h"
+#include "server.hpp"
 
 #define MAX 2048
 #define FILESZ 300
