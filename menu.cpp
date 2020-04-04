@@ -5,6 +5,7 @@
 #include "menu.hpp"
 #include "user.hpp"
 #include "parser.hpp"
+#include "client.hpp"
 #define MAX 255
 
 using namespace std;
@@ -136,6 +137,8 @@ void registerUser()
 void clientMenu(char* username, bool admin)
 {
 
+	connectToServer();
+	
 	char option;
 		while(option != 9)
 		{
