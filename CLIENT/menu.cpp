@@ -466,14 +466,11 @@ void passwordRequest(int sockfd,char* username)
 	getchar();
 	if (passStatus == 1)
 	{
-		clrscrn();
-		cout << "\tPassword Changed\n\n";
-		cout << "\tPress Enter To Login";
 		do 
 		{	
 			clrscrn();
+			cout << "\tPassword Changed\n\n";
 			cout << "\tPress Enter To Login";
-			getchar();
 		}while(cin.get() != '\n');
 		
 		loginUser();

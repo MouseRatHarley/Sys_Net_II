@@ -206,7 +206,7 @@ void direct(int sd,char buffer[MAX])
 	char* MET[50];
 	char* pch;
 	int i = 0;
-	
+	bool passStats;
 	Parser* parser = new Parser;
 	pch = strtok((char*)buffer,"%");
 	while (pch != NULL)
@@ -345,12 +345,12 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	
+	*/	
 	if(strncmp("P0",MET[0],2) == 0)//Change Password
 	{
 
-		user[sd] = parser->changePassword(MET[1],MET[2],MET[3]);
-		if (user != NULL)
+		passStats = parser->changePassword(MET[1],MET[2],MET[3]);
+		if (passStats == 1)
 		{
 			send(sd,"1",sizeof(2),0);
 
@@ -363,7 +363,7 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	
+	/*
 	if(strncmp("A0",MET[0],2) == 0)//Ban Member
 	{
 
