@@ -6,5 +6,5 @@
 
 int connectToServer();
 int serv (int sockfd, char* loginfo);
-
+void chat(int sockfd, char* loginfo);
 #endif
