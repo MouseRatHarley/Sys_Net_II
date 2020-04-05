@@ -286,7 +286,7 @@ void clientMenu(int sockfd, char* username, int admin)
 
 void displayUsers(int sockfd)
 {
-	
+	int stat;	
 	clrscrn();
 	cout << "\t________________________\n";
 	cout << "\tCurrent Users in Chat\n\n";
@@ -296,11 +296,16 @@ void displayUsers(int sockfd)
 	cout << "\tUser 2\n";
 	cout << "\t________________________\n";
 	getchar();
-	serv(sockfd,"C0");
+	stat = serv(sockfd,"C0%");
+	
+	getchar();
+	getchar();
+	/*
 	if (cin.get() == '\n')
 	{
 		cout << "\tOutta\n\n";
 	}
+	*/
 
 }
 
