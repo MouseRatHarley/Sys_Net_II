@@ -456,7 +456,7 @@ void passwordRequest(int sockfd,char* username)
 	cout << "\tPasswords Match\n";	
 	strcat(oldPass,"%");
 	strcat(oldPass,newPass);
-	strcat(oldPass,"%");
+	//strcat(oldPass,"%");
 		
 	strcpy(loginInfo ,stringCat("P0",username,oldPass));
 	

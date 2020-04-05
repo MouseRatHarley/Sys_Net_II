@@ -343,10 +343,11 @@ void direct(int sd,char buffer[MAX],User** user)
 		bzero(buffer,sizeof(MAX));
 
 	}
+	
 	if(strncmp("P0",MET[0],2) == 0)//Change Password
 	{
 
-		user = parser->registerUser(MET[1],MET[2]);
+		user[sd] = parser->changePassword(MET[1],MET[2],MET[3]);
 		if (user != NULL)
 		{
 			send(sd,"1",sizeof(2),0);
@@ -360,6 +361,7 @@ void direct(int sd,char buffer[MAX],User** user)
 		bzero(buffer,sizeof(MAX));
 
 	}
+	
 	if(strncmp("A0",MET[0],2) == 0)//Ban Member
 	{
 
