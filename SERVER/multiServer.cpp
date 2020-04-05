@@ -17,11 +17,13 @@
 #define PORT 60001 
 using namespace std;
 
+int max_clients = 30;
+
 int server(int argc , char *argv[]) 
 { 
 	int opt = TRUE; 
 	int master_socket , addrlen , new_socket , client_socket[30] , 
-		max_clients = 30 , activity, i , valread , sd; 
+		activity, i , valread , sd; 
 	int max_sd; 
 	struct sockaddr_in address; 
 
@@ -182,7 +184,7 @@ int server(int argc , char *argv[])
 						
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
-					direct(sd,buffer,listOfUsers[sd]);
+					direct(sd,buffer,listOfUsers);
 
 					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
@@ -196,7 +198,7 @@ int server(int argc , char *argv[])
 return 0; 
 } 
 
-void direct(int sd,char buffer[MAX],User* user)
+void direct(int sd,char buffer[MAX],User** user)
 {
 	
 	char* MET[50];
@@ -211,15 +213,17 @@ void direct(int sd,char buffer[MAX],User* user)
 		pch = strtok(NULL,"%");
 		i++;
 	}
+	
+	
 
 	if(strncmp("L0",MET[0],2) == 0)//Login User
 	{
 		
-		user = parser->checkLoginInfo(MET[1],MET[2]);
-		if (user != NULL)//good username and password
+		user[sd] = parser->checkLoginInfo(MET[1],MET[2]);
+		if (user[sd] != NULL)//good username and password
 		{
 			//cout << "LOGIN OK\n";
-			if(user->getAdmin() == 1)
+			if(user[sd]->getAdmin() == 1)
 			{	
 				//cout << "1\n\n";
 				send(sd, "1", sizeof(2), 0);
@@ -234,7 +238,7 @@ void direct(int sd,char buffer[MAX],User* user)
 		}
 		else//bad login attempt let user know
 		{
-			delete user;
+			delete user[sd];
 			send(sd,"9",sizeof(2),0);
 		}
 	
@@ -242,38 +246,34 @@ void direct(int sd,char buffer[MAX],User* user)
 	if(strncmp("R0",MET[0],2) == 0)//Register User
 	{
 
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
+		user[sd] = parser->registerUser(MET[1],MET[2]);
+		if (user[sd] != NULL)
 		{
 			send(sd,"1",sizeof(2),0);
-
 			bzero(buffer,sizeof(MAX));
 		}
 		else
 		{
-			delete user;
+			delete user[sd];
 			send(sd,"0",sizeof(2),0);
 		}
 		bzero(buffer,sizeof(MAX));
 
 	}
-	/*
+	
 	if(strncmp("C0",MET[0],2) == 0)//Online members
 	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
+		string online;
+		for(int j = 0; j < max_clients; j++)
 		{
-			send(sd,"1",sizeof(2),0);
-
-			bzero(buffer,sizeof(MAX));
+			if(user[j]->getUsername() != NULL)
+			{
+				online += string(user[j]->getUsername()) + "%";
+			}
 		}
-		else
-		{
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-
+		cout << online << endl;
+	}
+	/*
 	}
 	if(strncmp("C1",MET[0],2) == 0)//Public Chat
 	{
