@@ -15,7 +15,6 @@ using namespace std;
 //CONSTRUCTORS///////////////////////////////////////////////////////////////////////////////////
 User::User()
 {
-	_buffer = NULL;
 	_username = NULL;
 	_password = NULL;
 	_admin = false; // no background processing
@@ -40,10 +39,7 @@ User::User(char* username, char* password, char admin, int accountNumber)
 //SETTERS/////////////////////////////////////////////////////////////////////////////////////////
 void User::setUsername (char *username)
 {
-	cout<<"tell me WTF is going on " << username << endl;
-	_buffer = username;
 	_username = username;
-	cout<<"this guy knows : " << _username << endl;
 }
   
 void User::setPassword(char *password)
@@ -79,7 +75,7 @@ void User::setPrivateChat(char* recieverName)
 //DEBUGGING////////////////////////////////////////////////////////////////////////////////////////
 void User::printUser()    
 { 
-	cout << "\tusername: [" << _username << "]" << endl <<         
+	cout << "\tusername: [" << ((_username != NULL) ? _username : "NULL") << "]" << endl <<         
 			"\tpassword: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
  			"\taccountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
  			"\tadmin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 

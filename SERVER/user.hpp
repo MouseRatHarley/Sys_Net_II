@@ -4,8 +4,7 @@
 #define MAXARGS 30
 
 class User { 
-  private:
-  	char* _buffer;      
+  private:      
   	char* _username;
   	char* _password;    
   	bool  _admin;                   /* admin identifier        */      

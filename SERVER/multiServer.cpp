@@ -37,6 +37,7 @@ int server(int argc , char *argv[])
 	//a message 
 	char *message = "Im a Server \r\n"; 
 	
+	User* listOfUsers[max_clients];
 
 	//initialise all client_socket[] to 0 so not checked 
 	for (i = 0; i < max_clients; i++) 
@@ -186,14 +187,7 @@ int server(int argc , char *argv[])
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
 					direct(sd,buffer);
-					
-					
-					if(user[sd] != NULL)
-					{
-						cout << user[sd]->getUsername() << endl;
-						user[sd]->printUser();
-					}
-					
+
 					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
 					//bzero(buffer,MAX);			
@@ -246,6 +240,7 @@ void direct(int sd,char buffer[MAX])
 		}
 		else//bad login attempt let user know
 		{
+			delete user[sd];
 			send(sd,"9",sizeof(2),0);
 		}
 	
@@ -261,6 +256,7 @@ void direct(int sd,char buffer[MAX])
 		}
 		else
 		{
+			delete user[sd];
 			send(sd,"0",sizeof(2),0);
 		}
 		bzero(buffer,sizeof(MAX));
