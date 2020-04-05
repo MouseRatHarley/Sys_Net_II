@@ -5,6 +5,6 @@
 #include "user.hpp"
 
 int server(int argc , char *argv[]);
-void direct(int sd,char buffer[MAX],User* user);
+void direct(int sd,char buffer[MAX],User* user[]);
 
 #endif
