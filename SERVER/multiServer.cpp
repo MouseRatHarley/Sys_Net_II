@@ -229,7 +229,7 @@ void direct(int sd,char buffer[MAX])
 			bzero(buffer,sizeof(MAX));
 		
 		}
-		else
+		else//bad login attempt let user know
 		{
 			send(sd,"9",sizeof(2),0);
 		}
