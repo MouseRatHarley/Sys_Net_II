@@ -69,6 +69,11 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 					cout<<"\tWELCOME ADMIN"<<endl;
 					user->setAdmin(true);
 				}
+				else if(token[0]=='B')
+				{
+					cout<<"\tYou Are BANNED"<<endl;
+					user->setAdmin(false);
+				}
 				else 
 				{
 					cout<<"\tWELCOME USER"<<endl;
@@ -222,9 +227,9 @@ bool Parser::banUser(char* username, char* password)
 {
 	string line;
 	string badUsername = string(username);
-	string badPassword = string(password);
-	string full = badUsername + "\t" + badPassword;
+	string badPassword = "XXXXX";
 	
+	string full = badUsername + "\t" + badPassword;
 	string bannedUser = badUsername + "\t" + badPassword + "\t" + "B666";
 	int i = 0;
 	ifstream myfile;

@@ -19,7 +19,9 @@ User::User()
 	_password = NULL;
 	_admin = false; // no background processing
 	_accountNumber = 0;
-	_socketNumber = -1;
+	_portNumber = 0;
+	_inGroupChat = false;
+	_privateChat = NULL;
 		
 } 
 
@@ -55,6 +57,21 @@ void User::setAccountNumber(int accountNumber)
 	_accountNumber = accountNumber;
 }
 
+void User::setPortNumber(long int portNumber)
+{
+	_portNumber = portNumber;
+}
+
+void User::setGroupChat(bool GC)
+{
+	_inGroupChat = GC;
+}
+
+void User::setPrivateChat(char* recieverName)
+{
+	_privateChat = recieverName;
+}
+
 //DEBUGGING////////////////////////////////////////////////////////////////////////////////////////
 void User::printUser()    
 { 
@@ -79,6 +96,21 @@ char* User::getPassword()
 bool User::getAdmin()
 {
 	return _admin;
+}
+
+long int User::getPortNumber()
+{
+	return _portNumber;
+}
+
+bool User::getGroupChat()
+{
+	return _inGroupChat;
+}
+
+char* User::getPrivateChat()
+{
+	return _privateChat;
 }
 
 //PRINTERS///////////////////////////////////////////////////////////////////////////////////////

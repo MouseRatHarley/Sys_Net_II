@@ -9,7 +9,10 @@ class User {
   	char* _password;    
   	bool  _admin;                   /* admin identifier        */      
   	int _accountNumber;           /* account number for the user */  
-  	int   _socketNumber;    
+  	long int _portNumber;
+  	bool _inGroupChat;
+  	char* _privateChat;
+	    
 	
 	
   public: 
@@ -22,6 +25,9 @@ class User {
    void setPassword(char *password);
    void setAdmin(bool admin);
    void setAccountNumber(int accountNumber);
+   void setPortNumber(long int portNumber);
+   void	setGroupChat(bool GC);
+   void setPrivateChat(char* recieverName);
 
    //DEBUGGING//////////////////////////////////////////////////////
    void printUser();
@@ -30,6 +36,9 @@ class User {
    char* getUsername();
    char* getPassword();
    bool  getAdmin();
+   long int getPortNumber();
+   bool	 getGroupChat();
+   char* getPrivateChat();
    
    //PRINTERS///////////////////////////////////////////////////////
    void  printFile();
