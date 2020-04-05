@@ -16,7 +16,7 @@ void groupChat(int sockfd,char* username);
 void privateChat(char* username);
 void pullHistory(char* username);
 void FTP();
-void passwordRequest(char* username);
+void passwordRequest(int sockfd,char* username);
 bool verifyAdmin(char* username);
 
 #endif
