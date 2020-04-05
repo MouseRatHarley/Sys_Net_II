@@ -221,7 +221,7 @@ void clientMenu(int sockfd, char* username, int admin)
 			cout << "\t7. Logout\n"; //L0+
 			if (admin == true)
 			{
-				cout << "\t8. Admim\n";//A0+
+				cout << "\t8. Admin\n";//A0+
 			}
 			cout << "\t0. Return to login\n";
 			cout << "\t====================================\n";
