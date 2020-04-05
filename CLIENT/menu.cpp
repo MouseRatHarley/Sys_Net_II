@@ -221,7 +221,7 @@ void clientMenu(int sockfd, char* username, int admin)
 			cout << "\t7. Logout\n"; //L0+
 			if (admin == true)
 			{
-				cout << "\t8. Admim\n";//A0+
+				cout << "\t8. Admin\n";//A0+
 			}
 			cout << "\t0. Return to login\n";
 			cout << "\t====================================\n";
@@ -456,7 +456,7 @@ void passwordRequest(int sockfd,char* username)
 	cout << "\tPasswords Match\n";	
 	strcat(oldPass,"%");
 	strcat(oldPass,newPass);
-	strcat(oldPass,"%");
+	//strcat(oldPass,"%");
 		
 	strcpy(loginInfo ,stringCat("P0",username,oldPass));
 	
@@ -466,14 +466,11 @@ void passwordRequest(int sockfd,char* username)
 	getchar();
 	if (passStatus == 1)
 	{
-		clrscrn();
-		cout << "\tPassword Changed\n\n";
-		cout << "\tPress Enter To Login";
 		do 
 		{	
 			clrscrn();
+			cout << "\tPassword Changed\n\n";
 			cout << "\tPress Enter To Login";
-			getchar();
 		}while(cin.get() != '\n');
 		
 		loginUser();
