@@ -17,7 +17,7 @@ User::User()
 {
 	_username = NULL;
 	_password = NULL;
-	_admin = false; // no background processing
+	_admin = false; 
 	_accountNumber = 0;
 	_portNumber = 0;
 	_inGroupChat = false;

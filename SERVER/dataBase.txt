@@ -3,3 +3,5 @@ shane	123456	x456785
 XxSniperKillerxX	7895	x456785
 user	123	X432534
 admin	123	A456785
+d	dragongod	x456785
+Oprah	theONE	x456785

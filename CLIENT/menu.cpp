@@ -232,11 +232,11 @@ void clientMenu(int sockfd, char* username, int admin)
 			{
 				case '1':
 					cout << "\tCurrent Members\n\n";
-					displayUsers();
+					displayUsers(sockfd);
 					break;
 				case '2':
 					cout << "\tGroup Chat\n\n";
-					groupChat(username);
+					groupChat(sockfd,username);
 					break;				
 				case '3':
 					cout << "\tPrivate Chat\n\n";
@@ -284,9 +284,9 @@ void clientMenu(int sockfd, char* username, int admin)
 
 
 
-void displayUsers()
+void displayUsers(int sockfd)
 {
-	
+	int stat;	
 	clrscrn();
 	cout << "\t________________________\n";
 	cout << "\tCurrent Users in Chat\n\n";
@@ -295,26 +295,34 @@ void displayUsers()
 	cout << "\tUser 1\n";
 	cout << "\tUser 2\n";
 	cout << "\t________________________\n";
-	getchar();	
+	getchar();
+	stat = serv(sockfd,"C0%");
+	
+	getchar();
+	getchar();
+	/*
 	if (cin.get() == '\n')
 	{
 		cout << "\tOutta\n\n";
 	}
+	*/
 
 }
 
-void groupChat(char* username)
+void groupChat(int sockfd,char* username)
 {
 	clrscrn();
 	cout << "\t_________________________\n";
 	cout << "\tWelcome to Group Chat\n";
 	cout << "\n\n\n";
-	getchar();
 	
+	chat(sockfd,username);
+	/*
 	if (cin.get() == '\n')
 	{
 		cout << "\tChatting \n\n\n";
 	}
+	*/
 }
 
 void privateChat(char* username)

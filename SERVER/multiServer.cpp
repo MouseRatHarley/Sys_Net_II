@@ -11,16 +11,21 @@
 #include <iostream>	
 #include "multiServer.hpp"
 #include "parser.hpp"
+#include "user.hpp"
 #define TRUE 1 
 #define FALSE 0 
 #define PORT 60001 
 using namespace std;
 
+int max_clients = 30;
+
+User* listOfUsers[30];
+
 int server(int argc , char *argv[]) 
 { 
 	int opt = TRUE; 
 	int master_socket , addrlen , new_socket , client_socket[30] , 
-		max_clients = 30 , activity, i , valread , sd; 
+		activity, i , valread , sd; 
 	int max_sd; 
 	struct sockaddr_in address; 
 
@@ -31,11 +36,14 @@ int server(int argc , char *argv[])
 
 	//a message 
 	char *message = "Im a Server \r\n"; 
+	
+	
 
 	//initialise all client_socket[] to 0 so not checked 
 	for (i = 0; i < max_clients; i++) 
 	{ 
-		client_socket[i] = 0; 
+		client_socket[i] = 0;
+		listOfUsers[i] = new User; 
 	}	 
 
 	//create a master socket 
@@ -139,7 +147,6 @@ int server(int argc , char *argv[])
 				{ 
 					client_socket[i] = new_socket; 
 					printf("Adding to list of sockets as %d\n" , i); 
-
 					break; 
 				} 
 			} 
@@ -179,6 +186,7 @@ int server(int argc , char *argv[])
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
 					direct(sd,buffer);
+					listOfUsers[sd]->printUser();
 
 					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
@@ -200,7 +208,6 @@ void direct(int sd,char buffer[MAX])
 	int i = 0;
 	
 	Parser* parser = new Parser;
-	User* user = new User;
 	pch = strtok((char*)buffer,"%");
 	while (pch != NULL)
 	{
@@ -208,15 +215,17 @@ void direct(int sd,char buffer[MAX])
 		pch = strtok(NULL,"%");
 		i++;
 	}
+	
+	
 
 	if(strncmp("L0",MET[0],2) == 0)//Login User
 	{
 		
-		user = parser->checkLoginInfo(MET[1],MET[2]);
-		if (user != NULL)//good username and password
+		listOfUsers[sd] = parser->checkLoginInfo(MET[1],MET[2]);
+		if (listOfUsers[sd] != NULL)//good username and password
 		{
 			//cout << "LOGIN OK\n";
-			if(user->getAdmin() == 1)
+			if(listOfUsers[sd]->getAdmin() == 1)
 			{	
 				//cout << "1\n\n";
 				send(sd, "1", sizeof(2), 0);
@@ -231,44 +240,52 @@ void direct(int sd,char buffer[MAX])
 		}
 		else//bad login attempt let user know
 		{
+			delete listOfUsers[sd];
 			send(sd,"9",sizeof(2),0);
 		}
-	
 	}
 	if(strncmp("R0",MET[0],2) == 0)//Register User
 	{
 
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
+		listOfUsers[sd] = parser->registerUser(MET[1],MET[2]);
+		if (listOfUsers[sd] != NULL)
 		{
 			send(sd,"1",sizeof(2),0);
-
 			bzero(buffer,sizeof(MAX));
 		}
 		else
 		{
+			delete listOfUsers[sd];
 			send(sd,"0",sizeof(2),0);
 		}
 		bzero(buffer,sizeof(MAX));
-
 	}
-	/*
+	
 	if(strncmp("C0",MET[0],2) == 0)//Online members
 	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
+		string online;
+		for(int j = 0; j < max_clients; j++)
 		{
-			send(sd,"1",sizeof(2),0);
-
-			bzero(buffer,sizeof(MAX));
+			if(listOfUsers[j]->getUsername() != NULL)
+			{
+				online += string(listOfUsers[j]->getUsername()) + "%";
+			}
 		}
-		else
+		cout << online << endl;
+	}
+	
+	for(int j = 0; j < max_clients; j++)
 		{
-			send(sd,"0",sizeof(2),0);
+			if(listOfUsers[j]->getUsername() != NULL)
+			{
+				cout << "!!!!!!!!!!!!!!" << endl;
+				cout<< string(listOfUsers[j]->getUsername()) << endl;
+				cout << "!!!!!!!!!!!!!!" << endl;
+				
+			}
 		}
-		bzero(buffer,sizeof(MAX));
-
+		
+	/*
 	}
 	if(strncmp("C1",MET[0],2) == 0)//Public Chat
 	{
