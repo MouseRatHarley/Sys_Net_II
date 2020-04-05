@@ -443,8 +443,7 @@ void passwordRequest(char* username)
 		}
 	}while (strcmp(newPass,newPassConf)!=0);
 	
-	cout << "\tPasswords Match\n";
-	string	
+	cout << "\tPasswords Match\n";	
 	//changed = serv(sockfd,
 	getchar();
 	
