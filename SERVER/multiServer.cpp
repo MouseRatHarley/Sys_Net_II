@@ -191,8 +191,6 @@ int server(int argc , char *argv[])
 
 return 0; 
 } 
-	
-
 
 void direct(int sd,char buffer[MAX])
 {
@@ -200,7 +198,9 @@ void direct(int sd,char buffer[MAX])
 	char* MET[50];
 	char* pch;
 	int i = 0;
+	
 	Parser* parser = new Parser;
+	User* user = new User;
 	pch = strtok((char*)buffer,"%");
 	while (pch != NULL)
 	{
@@ -208,26 +208,50 @@ void direct(int sd,char buffer[MAX])
 		pch = strtok(NULL,"%");
 		i++;
 	}
+
 	if(strncmp("L0",MET[0],2) == 0)
 	{
 		
-		cout << "LOGIN\n";
-		parser->checkLoginInfo(MET[1],MET[2]);
-		//send(sd,"LOGIN",8,0);
-		bzero(buffer,sizeof(MAX));
+		user = parser->checkLoginInfo(MET[1],MET[2]);
+		if (user != NULL)//good username and password
+		{
+			//cout << "LOGIN OK\n";
+			if(user->getAdmin() == 1)
+			{	
+				//cout << "1\n\n";
+				send(sd, "1", sizeof(2), 0);
+			}
+			else
+			{
+				//cout << "0\n\n";
+				send(sd, "0", sizeof(2),0);
+			}
+			bzero(buffer,sizeof(MAX));
+		
+		}
+		else
+		{
+			send(sd,"9",sizeof(2),0);
+		}
+	
 	}
-	else if(strncmp("R0",MET[0],2) == 0)
+	if(strncmp("R0",MET[0],2) == 0)
 	{
 
-		send(sd,"REGISTER",9,0);
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
 		bzero(buffer,sizeof(MAX));
+
 	}
-	
-	
-	
-	
-	
-	
 	
 		
 }

@@ -5,6 +5,6 @@
 #define SA struct sockaddr
 
 int connectToServer();
-void serv (int sockfd, char* loginfo);
+int serv (int sockfd, char* loginfo);
 
 #endif

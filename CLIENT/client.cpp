@@ -29,15 +29,15 @@ using namespace std;
 **
 */
 
-void serv (int sockfd, char* loginfo) 
+int serv (int sockfd, char* loginfo) 
 { 
 	char buff[MAXS]; 
-	int connfd,n; 
-	char *MET[50];
-	char *pch;
-	int i;	
+	int connfd; 
+	//char *MET[50];
+	//char *pch;
+	//int i;	
 	struct sockaddr_in servaddr;
-	
+	char userType[2];
 	//printf("[CLIENT] USAGE: GET /src/file.bin\n\n");
 	//for (;;) 
 	//{ 
@@ -47,11 +47,15 @@ void serv (int sockfd, char* loginfo)
 		//printf("[CLIENT]: "); 
 		//n = 0; 
 		//while ((buff[n++] = getchar()) != '\n') ; 
-		cout << loginfo << endl;
+		//cout << loginfo << endl;
 		
-		send(sockfd, loginfo, RSIZE,0);
+		bzero(buff,sizeof(buff));
 
+		send(sockfd, loginfo, RSIZE,0);
+			
+		
 		//send(sockfd,"\n",3,0);	
+		
 		//pch = strtok(buff, " ");
 		//i = 0;
 		//while (pch != NULL)
@@ -64,15 +68,30 @@ void serv (int sockfd, char* loginfo)
 		
 		
 		bzero(loginfo, sizeof(loginfo)); // clear buffer after sending client response
+		bzero(buff,sizeof(buff));
+
+		read(sockfd, buff, sizeof(buff));
 		
-		//read(sockfd, buff, sizeof(buff)); //read server response
-		//printf("[SERVER]: %s\n", buff); 
 		
-		//if ((strncmp(buff, "exit", 4)) == 0) 
-		//{ 
-		//	printf("Closing Client\n"); 
-		//	break; 
-	//	}
+		//cout << "[SERVER]: " << buff << endl;  
+		bzero(buff,sizeof(buff));
+		read(sockfd,buff,sizeof(buff));
+		
+		if ((strncmp(buff, "1", 2)) == 0) 
+		{ 
+			//cout <<"BUFFER READ IN " << buff << endl;
+			bzero(buff,sizeof(buff));
+			return 1;
+		}
+		if ((strncmp(buff,"9",1)) == 0)
+		{
+			return 9;
+		}
+		else 
+		{
+			bzero(buff,sizeof(buff));
+			return 0;
+		}
 		//close(connfd);
 	//}
 } 

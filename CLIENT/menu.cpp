@@ -62,6 +62,21 @@ void menu()
 	
 }
 
+char* stringCat(char request[2], char username[USIZE],char password[PSIZE])
+{
+	char loginfo[MAX];
+	char* ptr = loginfo;
+	
+	strcpy(loginfo,request);
+	strcat(loginfo, "%");
+	strcat(loginfo,username);
+	strcat(loginfo,"%");
+	strcat(loginfo,password);
+	strcat(loginfo,"%");
+
+	return ptr;	
+}
+
 
 void loginUser()
 {
@@ -69,12 +84,12 @@ void loginUser()
 	//call server with L0+USERNAME+PASSWORD+		
 	
 	clrscrn();
-	char username[MAX];
-	char password[MAX];
-	bool userType;
+	char username[USIZE];
+	char password[PSIZE];
+	int userType;
 	//char * usern;	
 	int sockfd;	
-	char loginfo[MAX];
+	char loginInfo[MAX];
 	//User* user;
 	
 	sockfd = connectToServer();
@@ -86,27 +101,49 @@ void loginUser()
 	clrscrn();
 	cout << "\tEnter Password: ";
 	cin >> password;
-	
+	strcpy(loginInfo ,stringCat("L0",username,password));
+	/*
 	strcpy(loginfo,"L0");
 	strcat(loginfo,"%");
 	strcat(loginfo,username);
 	strcat(loginfo,"%");
 	strcat(loginfo,password);
 	strcat(loginfo,"%");
+	*/
+
+	//cout << loginfo << endl;
 	
-	cout << loginfo << endl;
+	userType = serv(sockfd, loginInfo);
 	
-	serv(sockfd, loginfo);
+	//cout << "MENU USERTYPE "<<userType << endl;
+
+	//getchar();
+	//getchar();
 
 	//send(sd,loginfo,sizeof(loginfo));
-
 	getchar();
-	getchar();
-
+	if (userType == 9)
+	{
+		clrscrn();
+		cout << "\tLogin Failed\n";
+		cout << "\tPress Enter To Continue\n\t";
+		do 
+		{	
+			clrscrn();
+			cout << "\tLogin Failed\n";
+			cout << "\tPress Enter To Continue";
+			getchar();
+		}while(cin.get() != '\n');
+		loginUser();
+		
+	}
+	else
+	{
+		clrscrn();
+		cout <<"\tLOGIN Success\n";
+		clientMenu(sockfd, username, userType);
+	}	
 	
-	
-	
-	clientMenu(username,userType);  //go to main menu for clients
 	
 }
 
@@ -117,9 +154,17 @@ void registerUser()
 	//call regiter info here
 	//register R0+USERNAME+PASSWORD+
 	clrscrn();
-	char  username[MAX];
-	char  password[MAX];
-	
+	char username[USIZE];
+	char password[PSIZE];
+	int userStatus;
+	//char * usern;	
+	int sockfd;	
+	char loginInfo[MAX];
+	//User* user;
+		
+	sockfd = connectToServer();
+
+
 	cout << "\tRegister User\n";
 	cout << "\tEnter Username: ";
 	cin >> username;
@@ -127,16 +172,37 @@ void registerUser()
 	cout << "\tEnter Password: ";
 	cin >> password;
 	
-	clrscrn();
-	cout << "\n\n\n";
-	cout << "\tUser Registered\n\n";
-
-	loginUser();
-
+	strcpy(loginInfo ,stringCat("R0",username,password));
+	
+	userStatus = serv(sockfd, loginInfo);
+	getchar();
+	if (userStatus == 1)
+	{
+		clrscrn();
+		cout << "\tUser Registered\n\n";
+		cout << "\tPress Enter To Login";
+		do 
+		{	
+			clrscrn();
+			cout << "\tPress Enter To Login";
+			getchar();
+		}while(cin.get() != '\n');
+		
+		loginUser();
+		
+	}
+	else
+	{
+		clrscrn();
+		cout <<"\tREGISTRATION FAILED\n";
+		menu();
+	}	
 }
 
 
-void clientMenu(char* username, bool admin)
+
+
+void clientMenu(int sockfd, char* username, int admin)
 {
 
 	
@@ -379,7 +445,7 @@ void passwordRequest(char* username)
 	
 	cout << "\tPasswords Match\n";
 	
-	//changed = parser->changePassword(username, oldPass, newPass);
+	//changed = serv(sockfd,
 	getchar();
 	
 	if (changed == true)
