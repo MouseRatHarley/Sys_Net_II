@@ -209,7 +209,7 @@ void direct(int sd,char buffer[MAX])
 		i++;
 	}
 
-	if(strncmp("L0",MET[0],2) == 0)
+	if(strncmp("L0",MET[0],2) == 0)//Login User
 	{
 		
 		user = parser->checkLoginInfo(MET[1],MET[2]);
@@ -235,7 +235,7 @@ void direct(int sd,char buffer[MAX])
 		}
 	
 	}
-	if(strncmp("R0",MET[0],2) == 0)
+	if(strncmp("R0",MET[0],2) == 0)//Register User
 	{
 
 		user = parser->registerUser(MET[1],MET[2]);
@@ -252,8 +252,127 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	
-		
+	/*
+	if(strncmp("C0",MET[0],2) == 0)//Online members
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("C1",MET[0],2) == 0)//Public Chat
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("C2",MET[0],2) == 0)//private Chat
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("H0",MET[0],2) == 0)//Chat History
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("F0",MET[0],2) == 0)//File Transfer
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("P0",MET[0],2) == 0)//Change Password
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	if(strncmp("A0",MET[0],2) == 0)//Ban Member
+	{
+
+		user = parser->registerUser(MET[1],MET[2]);
+		if (user != NULL)
+		{
+			send(sd,"1",sizeof(2),0);
+
+			bzero(buffer,sizeof(MAX));
+		}
+		else
+		{
+			send(sd,"0",sizeof(2),0);
+		}
+		bzero(buffer,sizeof(MAX));
+
+	}
+	*/
 }
 
 
