@@ -149,7 +149,9 @@ int server(int argc , char *argv[])
 		for (i = 0; i < max_clients; i++) 
 		{ 
 			sd = client_socket[i]; 
-
+			
+			//cout << client_socket[i] << endl;
+			
 			if (FD_ISSET( sd , &readfds)) 
 			{ 
 				//Check if it was for closing , and also read the 
@@ -165,13 +167,14 @@ int server(int argc , char *argv[])
 					close( sd ); 
 					client_socket[i] = 0; 
 				} 
-
+			
 				//Echo back the message that came in 
 				else
 				{ 
-					//set the string terminating NULL byte on the end 
-					//of the data read 
 					
+					//if message incomming 
+					//and user inGroup :wq
+
 					getpeername(sd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
 					
 					cout << "USER " << ntohs(address.sin_port);
@@ -355,6 +358,7 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
+	*/
 	if(strncmp("A0",MET[0],2) == 0)//Ban Member
 	{
 
@@ -372,7 +376,7 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	*/
+	
 }
 
 

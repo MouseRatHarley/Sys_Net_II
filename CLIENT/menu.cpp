@@ -252,7 +252,7 @@ void clientMenu(int sockfd, char* username, int admin)
 					break;
 				case '6':
 					cout << "\tChange Password\n";
-					passwordRequest(username);
+					passwordRequest(sockfd,username);
 					break;
 				case '7':
 					cout << "\tLogout\n";
@@ -263,7 +263,7 @@ void clientMenu(int sockfd, char* username, int admin)
 					if (admin == true)
 					{
 						cout << "\tAdministrator\n";
-						verifyAdmin(username);
+						adminOptions(username);
 						break;
 					}
 					else
@@ -413,7 +413,7 @@ void FTP()
 }
 
 
-void passwordRequest(char* username)
+void passwordRequest(int sockfd,char* username)
 {
 	char oldPass[MAX];
 	char newPass[MAX];
@@ -444,8 +444,7 @@ void passwordRequest(char* username)
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";
-	string	
-	//changed = serv(sockfd,
+	changed = serv(sockfd,username,oldPass,newPass);
 	getchar();
 	
 	if (changed == true)
@@ -458,7 +457,7 @@ void passwordRequest(char* username)
 }
 
 
-bool verifyAdmin(char* username)
+bool adminOptions(char* username)
 {
 	char admin;
 	char option;
