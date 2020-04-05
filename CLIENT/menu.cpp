@@ -252,7 +252,7 @@ void clientMenu(int sockfd, char* username, int admin)
 					break;
 				case '6':
 					cout << "\tChange Password\n";
-					passwordRequest(username);
+					passwordRequest(sockfd,username);
 					break;
 				case '7':
 					cout << "\tLogout\n";
@@ -421,12 +421,14 @@ void FTP()
 }
 
 
-void passwordRequest(char* username)
+void passwordRequest(int sockfd,char* username)
 {
 	char oldPass[MAX];
 	char newPass[MAX];
 	char newPassConf[MAX];
 	bool changed;
+	char loginInfo[MAX];
+	int passStatus;
 	//Parser* parser;
 	clrscrn();	
 	cout << "\t_________________________\n";
@@ -452,15 +454,37 @@ void passwordRequest(char* username)
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";	
-	//changed = serv(sockfd,
-	getchar();
+	strcat(oldPass,"%");
+	strcat(oldPass,newPass);
+	strcat(oldPass,"%");
+		
+	strcpy(loginInfo ,stringCat("P0",username,oldPass));
 	
-	if (changed == true)
+	passStatus = serv(sockfd, loginInfo);
+
+	cout << oldPass << endl;
+	getchar();
+	if (passStatus == 1)
 	{
+		clrscrn();
+		cout << "\tPassword Changed\n\n";
+		cout << "\tPress Enter To Login";
+		do 
+		{	
+			clrscrn();
+			cout << "\tPress Enter To Login";
+			getchar();
+		}while(cin.get() != '\n');
+		
 		loginUser();
+		
 	}
 	else
-		return;
+	{
+		clrscrn();
+		cout <<"\tPassword Change FAILED\n";
+		menu();
+	}	
 
 }
 

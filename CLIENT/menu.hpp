@@ -2,7 +2,7 @@
 #define MENU
 
 #define USIZE 20  //Username Size
-#define PSIZE 20  //password size
+#define PSIZE 8   //password size
 
 
 void clrscrn();
@@ -16,7 +16,7 @@ void groupChat(int sockfd,char* username);
 void privateChat(char* username);
 void pullHistory(char* username);
 void FTP();
-void passwordRequest(char* username);
+void passwordRequest(int sockfd,char* username);
 bool verifyAdmin(char* username);
 
 #endif
