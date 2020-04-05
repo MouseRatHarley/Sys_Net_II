@@ -461,22 +461,60 @@ void passwordRequest(char* username)
 bool verifyAdmin(char* username)
 {
 	char admin;
+	int option;
+	char userID;
 	//clrscrn();	
-	cout << "\t_________________________\n";
-	cout << "\tAre you admin? y/n: ";
-	cin >> admin;
-	if (admin == 'y')
+	while (option != 9)
 	{
-		return true;
+	
+		clrscrn();
+		cout << "\t_________________________\n";
+		cout << "\tAdministration Menu\n\n";
+		cout << "\t1. Ban a member\n";
+		cout << "\t2. Block a member\n";
+		cout << "\t0. Return\n";
+		cout << "\t====================================\n";
+		cout << "\tEnter your selection: ";
+		
+		cin >> option;
+			switch(option)
+			{
+				case '1':
+					clrscrn();
+					cout << "\tEnter User ID to Ban \n";
+					cout << "\t\n\n";
+					cout << "\t====================================\n";
+					cout << "\tUser ID: ";
+					cin >> userID;
+					clrscrn();
+					cout << "\tUser ID: " << userID;
+					cout << "\n";
+					cout << "\t Banned ";
+					getchar();
+					getchar();				
+					break;
+				case '2':
+					clrscrn();
+					cout << "\tEnter User ID to block\n";
+					cout << "\t====================================\n";
+					cout << "\tUser ID: ";
+					cin >> userID;	
+					clrscrn();
+					cout << "\tUser ID: " << userID;
+					cout << "\n";
+					cout << "\t Blocked ";
+					getchar();
+					getchar();
+					break;
+				case '0':
+					return 0;
+				default:
+					cout << "\tnot a valid entry\n";
+					break;
+			}
 	}
-	else 
-		return false;
-	if (cin.get() == '\n')
-	{
-		cout << "\teh im not getting paid for this go ahead\n\n";
-		return true;	
-	}
-	getchar();
+	
+
 }
 
 
