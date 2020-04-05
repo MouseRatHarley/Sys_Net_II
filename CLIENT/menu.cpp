@@ -444,7 +444,7 @@ void passwordRequest(char* username)
 	}while (strcmp(newPass,newPassConf)!=0);
 	
 	cout << "\tPasswords Match\n";
-	
+	string	
 	//changed = serv(sockfd,
 	getchar();
 	
@@ -461,10 +461,10 @@ void passwordRequest(char* username)
 bool verifyAdmin(char* username)
 {
 	char admin;
-	int option;
-	char userID;
+	char option;
+	char userID[USIZE];
 	//clrscrn();	
-	while (option != 9)
+	while (option != '9')
 	{
 	
 		clrscrn();
@@ -477,41 +477,58 @@ bool verifyAdmin(char* username)
 		cout << "\tEnter your selection: ";
 		
 		cin >> option;
-			switch(option)
+		
+		switch(option)
+		{
+			case '1':
 			{
-				case '1':
-					clrscrn();
-					cout << "\tEnter User ID to Ban \n";
-					cout << "\t\n\n";
+				clrscrn();
+				cout << "\tEnter User ID to Ban \n";
+				cout << "\t\n\n";
+				cout << "\t====================================\n";
+				cout << "\tUser ID: ";
+				cin >> userID;
+				do 
+				{	
+					clrscrn();	
 					cout << "\t====================================\n";
-					cout << "\tUser ID: ";
-					cin >> userID;
-					clrscrn();
-					cout << "\tUser ID: " << userID;
-					cout << "\n";
-					cout << "\t Banned ";
+					cout << "\tUser ID: [" << userID;
+					cout << "] has been Banned\n";
+					cout << "\tPress Enter To Return";
 					getchar();
-					getchar();				
-					break;
-				case '2':
-					clrscrn();
-					cout << "\tEnter User ID to block\n";
-					cout << "\t====================================\n";
-					cout << "\tUser ID: ";
-					cin >> userID;	
-					clrscrn();
-					cout << "\tUser ID: " << userID;
-					cout << "\n";
-					cout << "\t Blocked ";
-					getchar();
-					getchar();
-					break;
-				case '0':
-					return 0;
-				default:
-					cout << "\tnot a valid entry\n";
-					break;
+				}while(cin.get() != '\n');
+				break;
 			}
+			case '2':
+			{
+				clrscrn();
+				cout << "\tEnter User ID to block\n";
+				cout << "\t====================================\n";
+				cout << "\tUser ID: ";
+				cin >> userID;	
+				do 
+				{	
+					clrscrn();
+					cout << "\t====================================\n";
+					cout << "\tUser ID: [" << userID;
+					cout << "] has been Blocked\n\n";
+					cout << "\tPress Enter To Return";
+					getchar();
+				}while(cin.get() != '\n');			
+				
+				
+				break;
+			}
+			case '0':
+			{
+				return NULL;
+			}
+			default:
+			{
+				cout << "\tnot a valid entry\n";
+				break;
+			}
+		}
 	}
 	
 
