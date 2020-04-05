@@ -19,6 +19,8 @@ using namespace std;
 
 int max_clients = 30;
 
+User* user[30];
+
 int server(int argc , char *argv[]) 
 { 
 	int opt = TRUE; 
@@ -41,7 +43,7 @@ int server(int argc , char *argv[])
 	for (i = 0; i < max_clients; i++) 
 	{ 
 		client_socket[i] = 0;
-		listOfUsers[i] = new User; 
+		user[i] = new User; 
 	}	 
 
 	//create a master socket 
@@ -184,7 +186,7 @@ int server(int argc , char *argv[])
 						
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
-					direct(sd,buffer,listOfUsers);
+					direct(sd,buffer);
 
 					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
@@ -198,7 +200,7 @@ int server(int argc , char *argv[])
 return 0; 
 } 
 
-void direct(int sd,char buffer[MAX],User** user)
+void direct(int sd,char buffer[MAX])
 {
 	
 	char* MET[50];
