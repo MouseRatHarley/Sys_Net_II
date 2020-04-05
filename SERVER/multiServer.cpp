@@ -11,6 +11,7 @@
 #include <iostream>	
 #include "multiServer.hpp"
 #include "parser.hpp"
+#include "user.hpp"
 #define TRUE 1 
 #define FALSE 0 
 #define PORT 60001 
@@ -31,11 +32,14 @@ int server(int argc , char *argv[])
 
 	//a message 
 	char *message = "Im a Server \r\n"; 
+	
+	User* listOfUsers[max_clients];
 
 	//initialise all client_socket[] to 0 so not checked 
 	for (i = 0; i < max_clients; i++) 
 	{ 
-		client_socket[i] = 0; 
+		client_socket[i] = 0;
+		listOfUsers[i] = new User; 
 	}	 
 
 	//create a master socket 
@@ -149,9 +153,7 @@ int server(int argc , char *argv[])
 		for (i = 0; i < max_clients; i++) 
 		{ 
 			sd = client_socket[i]; 
-			
-			//cout << client_socket[i] << endl;
-			
+
 			if (FD_ISSET( sd , &readfds)) 
 			{ 
 				//Check if it was for closing , and also read the 
@@ -167,21 +169,20 @@ int server(int argc , char *argv[])
 					close( sd ); 
 					client_socket[i] = 0; 
 				} 
-			
+
 				//Echo back the message that came in 
 				else
 				{ 
+					//set the string terminating NULL byte on the end 
+					//of the data read 
 					
-					//if message incomming 
-					//and user inGroup :wq
-
 					getpeername(sd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
 					
 					cout << "USER " << ntohs(address.sin_port);
 						
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
-					direct(sd,buffer);
+					direct(sd,buffer,listOfUsers[sd]);
 
 					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
@@ -195,7 +196,7 @@ int server(int argc , char *argv[])
 return 0; 
 } 
 
-void direct(int sd,char buffer[MAX])
+void direct(int sd,char buffer[MAX],User* user)
 {
 	
 	char* MET[50];
@@ -203,7 +204,6 @@ void direct(int sd,char buffer[MAX])
 	int i = 0;
 	
 	Parser* parser = new Parser;
-	User* user = new User;
 	pch = strtok((char*)buffer,"%");
 	while (pch != NULL)
 	{
@@ -234,6 +234,7 @@ void direct(int sd,char buffer[MAX])
 		}
 		else//bad login attempt let user know
 		{
+			delete user;
 			send(sd,"9",sizeof(2),0);
 		}
 	
@@ -250,6 +251,7 @@ void direct(int sd,char buffer[MAX])
 		}
 		else
 		{
+			delete user;
 			send(sd,"0",sizeof(2),0);
 		}
 		bzero(buffer,sizeof(MAX));
@@ -358,7 +360,6 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	*/
 	if(strncmp("A0",MET[0],2) == 0)//Ban Member
 	{
 
@@ -376,7 +377,7 @@ void direct(int sd,char buffer[MAX])
 		bzero(buffer,sizeof(MAX));
 
 	}
-	
+	*/
 }
 
 
