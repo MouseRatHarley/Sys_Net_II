@@ -18,54 +18,36 @@
 
 using namespace std;
 
-void chat(int sockfd, char* loginfo)
+void chat(int sockfd, char* message)
 {
 	char buff[MAXS]; 
 	int connfd; 
 	//char *MET[50];
 	char *pch;
+	char type[4];
 	int i,n;	
 	struct sockaddr_in servaddr;
 	char userType[2];
-	printf("[CLIENT] USAGE: GET /src/file.bin\n\n");
+	strcpy(type,"C1%");
 	for (;;) 
 	{ 
 		connfd = connect(sockfd, (SA*)&servaddr, sizeof(servaddr)); 
-		//clientMenu();
-		
+			
 		printf("[CLIENT]: "); 
 		n = 0; 
 		while ((buff[n++] = getchar()) != '\n') ; 
-		cout << loginfo << endl;
+		strcat(type,buff);
+		strcat(type,"%");
+		send(sockfd, type, RSIZE, 0);
 		
+		bzero(type,sizeof(type));
 		bzero(buff,sizeof(buff));
 
-		send(sockfd, loginfo, RSIZE,0);
-			
-		
-		send(sockfd,"\n",3,0);	
-		
-		pch = strtok(buff, " ");
-		i = 0;
-		
-		/*
-		while (pch != NULL)
-		{
-			MET[i] = pch;
-			pch = strtok (NULL," ");
-			printf("TOK[%d]:%s\n",i,MET[i]); //For printing tokens of the http header from client
-			i++;
-		}
-		*/
-		
-		bzero(loginfo, sizeof(loginfo)); // clear buffer after sending client response
-		bzero(buff,sizeof(buff));
 
 		read(sockfd, buff, sizeof(buff));
 		
 		cout << "[SERVER]: " << buff << endl;  
 		bzero(buff,sizeof(buff));
-		read(sockfd,buff,sizeof(buff));
 		
 		close(connfd);
 	}
