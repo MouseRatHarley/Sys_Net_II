@@ -283,9 +283,11 @@ void direct(int sd,char buffer[MAX], int client_socket[30])
 		{
 			sd = client_socket[i];
 
-			cout << "\tSending to " << sd << MET[1] << endl;
-			
-			send(sd,MET[1],strlen(buffer),0);
+			if(sd != 0)
+			{
+				cout << "\tSending to " << sd << MET[1] << endl;
+				send(sd,MET[1],strlen(buffer),0);
+			}
 		}
 		
 	}

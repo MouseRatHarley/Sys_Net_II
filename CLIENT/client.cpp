@@ -44,15 +44,15 @@ void chat(int sockfd, char* message)
 		send(sockfd, type, RSIZE, 0);
 		
 		bzero(type,sizeof(type));
-		bzero(buff,sizeof(buff));
+		//bzero(buff,sizeof(buff));
 						
 				
-		if(read(sockfd, buff, sizeof(buff)) != NULL)
-		{
+		read(sockfd, buff, sizeof(buff)) != NULL
+		
 			cout << "[SERVER]: " << buff << endl;  
 			//bzero(buff,sizeof(buff));
-			close(connfd);
-		}
+			//close(connfd);
+		
 
 	}
 } 
