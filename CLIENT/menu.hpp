@@ -13,7 +13,7 @@ void loginUser();
 void clientMenu(int sockfd,char* username, int admin);
 void displayUsers(int sockfd);
 void groupChat(int sockfd,char* username);
-void privateChat(char* username);
+void privateChat(int sockfd,char* username);
 void pullHistory(char* username);
 void FTP();
 void passwordRequest(int sockfd,char* username);

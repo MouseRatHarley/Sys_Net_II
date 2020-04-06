@@ -255,7 +255,7 @@ void clientMenu(int sockfd, char* username, int admin)
 					break;				
 				case '3':
 					cout << "\tPrivate Chat\n\n";
-					privateChat(username);
+					privateChat(sockfd,username);
 					break;
 				case '4':
 					cout << "\tChat History\n\n";
@@ -340,15 +340,20 @@ void groupChat(int sockfd,char* username)
 	*/
 }
 
-void privateChat(char* username)
+void privateChat(int sockfd,char* username)
 {
 	
+	char chatName[MAX] = "C2%";
+
 	clrscrn();
 	cout << "\t_________________________\n";
 	cout << "\tWelcome to Private Chat\n";
 	cout << "\n\n\n";
 	cout << "\tUsers here are:\n\n\n";
 	getchar();	
+	
+	chat(sockfd, chatName);
+	
 	if (cin.get() == '\n')
 	{
 		cout << "\tStart Chat\n\n";
