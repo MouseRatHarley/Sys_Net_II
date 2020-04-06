@@ -190,7 +190,7 @@ int server(int argc , char *argv[])
 						continue;
 					}
 					cout << "before direct" << endl;
-					direct(sd,buffer);
+					direct(sd,buffer,client_socket);
 					cout << "after direct" << endl;
 					if(user[sd] != NULL)
 					{
@@ -209,7 +209,7 @@ int server(int argc , char *argv[])
 return 0; 
 } 
 
-void direct(int sd,char buffer[MAX])
+void direct(int sd,char buffer[MAX], int client_socket[30])
 {
 	
 	char* MET[50];
@@ -276,20 +276,7 @@ void direct(int sd,char buffer[MAX])
 			}
 			bzero(buffer,sizeof(MAX));
 	
-<<<<<<< HEAD
-		for (i = 0; i < max_clients; i++)
-		{
-			sd = client_socket[i];
-
-			if(sd != 0)
-			{
-				cout << "\tSending to " << sd << MET[1] << endl;
-				send(sd,MET[1],strlen(buffer),0);
-			}
-=======
->>>>>>> 66d0e7875a9b390bbc4f524be65181e2e2b13f95
-		}
-		
+		}	
 		if(strncmp("C0",MET[0],2) == 0)//Online members
 		{
 			string online;
@@ -302,25 +289,23 @@ void direct(int sd,char buffer[MAX])
 			}
 			cout << online << endl;
 		}
-		/*
-		}
+		
 		if(strncmp("C1",MET[0],2) == 0)//Public Chat
 		{
-	
-			user = parser->registerUser(MET[1],MET[2]);
-			if (user != NULL)
+			for (i = 0; i < max_clients; i++)
 			{
-				send(sd,"1",sizeof(2),0);
-	
-				bzero(buffer,sizeof(MAX));
+				sd = client_socket[i];
+
+				if(sd != 0)
+				{
+					cout << "\tSending to " << sd << MET[1] << endl;
+					send(sd,MET[1],strlen(buffer),0);
+				}
 			}
-			else
-			{
-				send(sd,"0",sizeof(2),0);
-			}
-			bzero(buffer,sizeof(MAX));
+			
 	
 		}
+		/*
 		if(strncmp("C2",MET[0],2) == 0)//private Chat
 		{
 	

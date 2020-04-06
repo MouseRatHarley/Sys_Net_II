@@ -5,6 +5,6 @@
 #include "user.hpp"
 
 int server(int argc , char *argv[]);
-void direct(int sd,char buffer[MAX]);
+void direct(int sd,char buffer[MAX],int client_socket[30]);
 
 #endif

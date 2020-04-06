@@ -41,18 +41,16 @@ void chat(int sockfd, char* message)
 		send(sockfd, type, RSIZE, 0);
 		
 		bzero(type,sizeof(type));
-<<<<<<< HEAD
 		//bzero(buff,sizeof(buff));
 						
 				
-		read(sockfd, buff, sizeof(buff)) != NULL
+		read(sockfd, buff, sizeof(buff));
 		
 			cout << "[SERVER]: " << buff << endl;  
 			//bzero(buff,sizeof(buff));
 			//close(connfd);
 		
 
-=======
 		bzero(buff,sizeof(buff));
 
 
@@ -65,7 +63,6 @@ void chat(int sockfd, char* message)
 		
 			close(connfd);
 		}
->>>>>>> 66d0e7875a9b390bbc4f524be65181e2e2b13f95
 	}
 } 
 
