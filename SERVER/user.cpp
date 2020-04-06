@@ -15,7 +15,7 @@ using namespace std;
 //CONSTRUCTORS///////////////////////////////////////////////////////////////////////////////////
 User::User()
 {
-	_username = NULL;
+	_username = "\n";
 	_password = NULL;
 	_admin = false; // no background processing
 	_accountNumber = 0;
@@ -27,7 +27,7 @@ User::User()
 
 User::User(char* username, char* password, char admin, int accountNumber)
 {
-		_username = username;
+		_username = std::string(username);
 		_password = password;
 		if(admin == 'A')
 		{
@@ -39,7 +39,9 @@ User::User(char* username, char* password, char admin, int accountNumber)
 //SETTERS/////////////////////////////////////////////////////////////////////////////////////////
 void User::setUsername (char *username)
 {
-	_username = username;
+	cout << "maybe I should use easy print statements" << endl;
+	_username = std::string(username);
+	cout<<"is this the problem of course it is \n";
 }
   
 void User::setPassword(char *password)
@@ -75,17 +77,18 @@ void User::setPrivateChat(char* recieverName)
 //DEBUGGING////////////////////////////////////////////////////////////////////////////////////////
 void User::printUser()    
 { 
-	cout << "\tusername: [" << ((_username != NULL) ? _username : "NULL") << "]" << endl <<         
+	cout << "\tusername: [" << ((_username == "\n") ? _username : "NULL") << "]" << endl <<         
 			"\tpassword: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
  			"\taccountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
  			"\tadmin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 
- 	
 }
 
 //GETTERS////////////////////////////////////////////////////////////////////////////////////////
 char* User::getUsername()
 {
-	return _username;
+	char* tmp;
+	strcpy(tmp, _username.c_str());
+	return tmp;
 }
 
 char* User::getPassword()

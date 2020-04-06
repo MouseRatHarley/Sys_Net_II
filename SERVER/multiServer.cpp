@@ -24,7 +24,7 @@ User* user[30];
 int server(int argc , char *argv[]) 
 { 
 	int opt = TRUE; 
-	int master_socket , addrlen , new_socket ,client_socket[30] , 
+	int master_socket , addrlen , new_socket , client_socket[30] , 
 		activity, i , valread , sd; 
 	int max_sd; 
 	struct sockaddr_in address; 
@@ -37,13 +37,12 @@ int server(int argc , char *argv[])
 	//a message 
 	char *message = "Im a Server \r\n"; 
 	
-	User* listOfUsers[max_clients];
 
 	//initialise all client_socket[] to 0 so not checked 
 	for (i = 0; i < max_clients; i++) 
 	{ 
+		//user[i] = new User;
 		client_socket[i] = 0;
-		user[i] = new User; 
 	}	 
 
 	//create a master socket 
@@ -183,13 +182,22 @@ int server(int argc , char *argv[])
 					getpeername(sd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
 					
 					cout << "USER " << ntohs(address.sin_port);
-						
+					//user[sd]->setPortNumber(ntohs(address.sin_port));
 					//buffer[valread] = '\0'; 
 					cout << " " << buffer << endl;
-					direct(sd,buffer,client_socket);
-
-					send(sd , "\n", sizeof(2) , 0 ); 
-					
+					if(buffer == NULL)
+					{
+						continue;
+					}
+					cout << "before direct" << endl;
+					direct(sd,buffer);
+					cout << "after direct" << endl;
+					if(user[sd] != NULL)
+					{
+						user[sd]->printUser();
+					}
+					cout << "after printUSER " << endl;
+					send(sd , buffer, strlen(buffer) , 0 ); 
 					bzero(buffer,sizeof(MAX));
 					//bzero(buffer,MAX);			
 					//close(sd);	
@@ -201,7 +209,7 @@ int server(int argc , char *argv[])
 return 0; 
 } 
 
-void direct(int sd,char buffer[MAX], int client_socket[30])
+void direct(int sd,char buffer[MAX])
 {
 	
 	char* MET[50];
@@ -218,67 +226,57 @@ void direct(int sd,char buffer[MAX], int client_socket[30])
 	}
 	
 	
-
-	if(strncmp("L0",MET[0],2) == 0)//Login User
+	cout << "before strncmp"<< endl;
+	if(MET[0] != NULL)
 	{
 		
-		user[sd] = parser->checkLoginInfo(MET[1],MET[2]);
-		if (user[sd] != NULL)//good username and password
+
+		if(strncmp("L0",MET[0],2) == 0)//Login User
 		{
-			//cout << "LOGIN OK\n";
-			if(user[sd]->getAdmin() == 1)
-			{	
-				//cout << "1\n\n";
-				send(sd, "1", sizeof(2), 0);
+			cout << "before parser->"<< endl;
+			user[sd] = parser->checkLoginInfo(MET[1],MET[2]);
+			if (user[sd] != NULL)//good username and password
+			{
+				//cout << "LOGIN OK\n";
+				cout << "before getAdmin"<< endl;
+				if(user[sd]->getAdmin() == 1)
+				{	
+					//cout << "1\n\n";
+					send(sd, "1", sizeof(2), 0);
+				}
+				else
+				{
+					//cout << "0\n\n";
+					send(sd, "0", sizeof(2),0);
+				}
+				bzero(buffer,sizeof(MAX));
+			
+			}
+			else//bad login attempt let user know
+			{
+				cout << "before delet user"<< endl;
+				delete user[sd];
+				send(sd,"9",sizeof(2),0);
+			}
+		
+		}
+		if(strncmp("R0",MET[0],2) == 0)//Register User
+		{
+	
+			user[sd] = parser->registerUser(MET[1],MET[2]);
+			if (user[sd] != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+				bzero(buffer,sizeof(MAX));
 			}
 			else
 			{
-				//cout << "0\n\n";
-				send(sd, "0", sizeof(2),0);
+				delete user[sd];
+				send(sd,"0",sizeof(2),0);
 			}
 			bzero(buffer,sizeof(MAX));
-		
-		}
-		else//bad login attempt let user know
-		{
-			delete user[sd];
-			send(sd,"9",sizeof(2),0);
-		}
 	
-	}
-	if(strncmp("R0",MET[0],2) == 0)//Register User
-	{
-
-		user[sd] = parser->registerUser(MET[1],MET[2]);
-		if (user[sd] != NULL)
-		{
-			send(sd,"1",sizeof(2),0);
-			bzero(buffer,sizeof(MAX));
-		}
-		else
-		{
-			delete user[sd];
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-	}
-	
-	if(strncmp("C0",MET[0],2) == 0)//Online members
-	{
-		string online;
-		for(int j = 0; j < max_clients; j++)
-		{
-			if(user[j]->getUsername() != NULL)
-			{
-				online += string(user[j]->getUsername()) + "%";
-			}
-		}
-		cout << online << endl;
-	}
-
-	if(strncmp("C1",MET[0],2) == 0)//Public Chat
-	{
-	
+<<<<<<< HEAD
 		for (i = 0; i < max_clients; i++)
 		{
 			sd = client_socket[i];
@@ -288,98 +286,130 @@ void direct(int sd,char buffer[MAX], int client_socket[30])
 				cout << "\tSending to " << sd << MET[1] << endl;
 				send(sd,MET[1],strlen(buffer),0);
 			}
+=======
+>>>>>>> 66d0e7875a9b390bbc4f524be65181e2e2b13f95
 		}
 		
-	}
-	/*
-	if(strncmp("C2",MET[0],2) == 0)//private Chat
-	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
+		if(strncmp("C0",MET[0],2) == 0)//Online members
 		{
-			send(sd,"1",sizeof(2),0);
-
+			string online;
+			for(int j = 0; j < max_clients; j++)
+			{
+				if(user[j]->getUsername() != NULL)
+				{
+					online += string(user[j]->getUsername()) + "%";
+				}
+			}
+			cout << online << endl;
+		}
+		/*
+		}
+		if(strncmp("C1",MET[0],2) == 0)//Public Chat
+		{
+	
+			user = parser->registerUser(MET[1],MET[2]);
+			if (user != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
 			bzero(buffer,sizeof(MAX));
+	
 		}
-		else
+		if(strncmp("C2",MET[0],2) == 0)//private Chat
 		{
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-
-	}
-	if(strncmp("H0",MET[0],2) == 0)//Chat History
-	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
-		{
-			send(sd,"1",sizeof(2),0);
-
+	
+			user = parser->registerUser(MET[1],MET[2]);
+			if (user != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
 			bzero(buffer,sizeof(MAX));
+	
 		}
-		else
+		if(strncmp("H0",MET[0],2) == 0)//Chat History
 		{
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-
-	}
-	if(strncmp("F0",MET[0],2) == 0)//File Transfer
-	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
-		{
-			send(sd,"1",sizeof(2),0);
-
+	
+			user = parser->registerUser(MET[1],MET[2]);
+			if (user != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
 			bzero(buffer,sizeof(MAX));
+	
 		}
-		else
+		if(strncmp("F0",MET[0],2) == 0)//File Transfer
 		{
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-
-	}
-	*/	
-	if(strncmp("P0",MET[0],2) == 0)//Change Password
-	{
-
-		passStats = parser->changePassword(MET[1],MET[2],MET[3]);
-		if (passStats == 1)
-		{
-			send(sd,"1",sizeof(2),0);
-
+	
+			user = parser->registerUser(MET[1],MET[2]);
+			if (user != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
 			bzero(buffer,sizeof(MAX));
+	
 		}
-		else
+		*/	
+		if(strncmp("P0",MET[0],2) == 0)//Change Password
 		{
-			send(sd,"0",sizeof(2),0);
-		}
-		bzero(buffer,sizeof(MAX));
-
-	}
-	/*
-	if(strncmp("A0",MET[0],2) == 0)//Ban Member
-	{
-
-		user = parser->registerUser(MET[1],MET[2]);
-		if (user != NULL)
-		{
-			send(sd,"1",sizeof(2),0);
-
+	
+			passStats = parser->changePassword(MET[1],MET[2],MET[3]);
+			if (passStats == 1)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
 			bzero(buffer,sizeof(MAX));
+	
 		}
-		else
+		/*
+		if(strncmp("A0",MET[0],2) == 0)//Ban Member
 		{
-			send(sd,"0",sizeof(2),0);
+	
+			user = parser->registerUser(MET[1],MET[2]);
+			if (user != NULL)
+			{
+				send(sd,"1",sizeof(2),0);
+	
+				bzero(buffer,sizeof(MAX));
+			}
+			else
+			{
+				send(sd,"0",sizeof(2),0);
+			}
+			bzero(buffer,sizeof(MAX));
+	
 		}
-		bzero(buffer,sizeof(MAX));
-
-	}
 	*/
+	}
 }
 
 
