@@ -1,11 +1,9 @@
 #ifndef USER_
 #define USER_
 
-#define MAXARGS 30
-
 class User { 
-  private:      
-  	char* _username;
+  private:    
+  	std::string _username;
   	char* _password;    
   	bool  _admin;                   /* admin identifier        */      
   	int _accountNumber;           /* account number for the user */  
