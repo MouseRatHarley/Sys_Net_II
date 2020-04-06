@@ -9,6 +9,20 @@
 #include <fcntl.h>
 #include <iostream>
 
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Client file that operates the connection with the 
+**server through sockets.
+**
+*/
 
 #define RSIZE 1025
 #define MAXS 2048
