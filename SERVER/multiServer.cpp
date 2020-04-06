@@ -189,16 +189,16 @@ int server(int argc , char *argv[])
 					{
 						continue;
 					}
-					cout << "before direct" << endl;
+					//cout << "before direct" << endl;
 					direct(sd,buffer,client_socket);
-					cout << "after direct" << endl;
+					//cout << "after direct" << endl;
 					if(user[sd] != NULL)
 					{
 						user[sd]->printUser();
 					}
-					cout << "after printUSER " << endl;
+					//cout << "after printUSER " << endl;
 					send(sd , buffer, strlen(buffer) , 0 ); 
-					bzero(buffer,sizeof(MAX));
+					//bzero(buffer,sizeof(MAX));
 					//bzero(buffer,MAX);			
 					//close(sd);	
 				} 

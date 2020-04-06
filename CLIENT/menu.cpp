@@ -6,7 +6,7 @@
 #include "menu.hpp"
 #include "client.hpp"
 
-#define MAX 255
+//#define MAX 255
 
 using namespace std;
 void clrscrn()
@@ -297,7 +297,7 @@ void displayUsers(int sockfd)
 	cout << "\t________________________\n";
 	getchar();
 	stat = serv(sockfd,"C0%");
-	
+		
 	getchar();
 	getchar();
 	/*
@@ -426,7 +426,7 @@ void passwordRequest(int sockfd,char* username)
 	char oldPass[MAX];
 	char newPass[MAX];
 	char newPassConf[MAX];
-	bool changed;
+	//bool changed;
 	char loginInfo[MAX];
 	int passStatus;
 	//Parser* parser;
@@ -488,7 +488,7 @@ void passwordRequest(int sockfd,char* username)
 
 bool verifyAdmin(char* username)
 {
-	char admin;
+	//char admin;
 	char option;
 	char userID[USIZE];
 	//clrscrn();	
