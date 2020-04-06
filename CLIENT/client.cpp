@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <iostream>
 
+#include "client.hpp"
 /*********************
 **Code Developed: Jarrod Resmondo
 **		  Shane Bolding
@@ -72,7 +73,7 @@ void sendFile(int nsockfd,char *filePath)
 
 
 	printf("Sending Picture as Byte Array\n");
-	char send_buffer[MAX]; // no link between BUFSIZE and the file size
+	char send_buffer[MAXS]; // no link between BUFSIZE and the file size
 	int nb = fread(send_buffer, 1, sizeof(send_buffer), pFile);
 	while(!feof(pFile)) 
 	{
@@ -110,7 +111,7 @@ void receiveFile(int sockfd,char buff[MAX])
 	{
 		int rSize = 0;
 		printf("%s\n\n\n",buff);
-		while((rSize = recv(sockfd, buff, MAX, 0)) > 0)
+		while((rSize = recv(sockfd, buff, MAXS, 0)) > 0)
 		{
 			lSize = fwrite(buff, sizeof(char), rSize, fr);
 			if(lSize < rSize)
@@ -118,8 +119,8 @@ void receiveFile(int sockfd,char buff[MAX])
 				perror("File Write Failed.\n");
 				exit(EXIT_FAILURE);
 			}
-			bzero(buff, MAX);
-			if (rSize == 0 || rSize != MAX) 
+			bzero(buff, MAXS);
+			if (rSize == 0 || rSize != MAXS) 
 			{
 				break;
 			}
