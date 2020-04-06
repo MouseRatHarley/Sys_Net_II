@@ -6,23 +6,7 @@
 #include "menu.hpp"
 #include "client.hpp"
 
-/*********************
-**Code Developed: Jarrod Resmondo
-**		  Shane Bolding
-**4/5/2020
-**COP4635 Project 2
-**
-*/
 
-
-/****************************
-**Function: Menu file. This file shows the client/user
-**options for the client/user to pick. Based on these
-**options this file calls the appropriate function.
-**
-*/
-
-#define MAX 255
 
 using namespace std;
 void clrscrn()
@@ -313,7 +297,7 @@ void displayUsers(int sockfd)
 	cout << "\t________________________\n";
 	getchar();
 	stat = serv(sockfd,"C0%");
-	
+		
 	getchar();
 	getchar();
 	/*
@@ -442,7 +426,7 @@ void passwordRequest(int sockfd,char* username)
 	char oldPass[MAX];
 	char newPass[MAX];
 	char newPassConf[MAX];
-	bool changed;
+	//bool changed;
 	char loginInfo[MAX];
 	int passStatus;
 	//Parser* parser;
@@ -504,7 +488,7 @@ void passwordRequest(int sockfd,char* username)
 
 bool verifyAdmin(char* username)
 {
-	char admin;
+	//char admin;
 	char option;
 	char userID[USIZE];
 	//clrscrn();	
