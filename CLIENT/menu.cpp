@@ -6,6 +6,22 @@
 #include "menu.hpp"
 #include "client.hpp"
 
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Menu file. This file shows the client/user
+**options for the client/user to pick. Based on these
+**options this file calls the appropriate function.
+**
+*/
+
 #define MAX 255
 
 using namespace std;

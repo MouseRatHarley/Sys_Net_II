@@ -12,6 +12,21 @@
 #include "parser.hpp"
 //#include "user.cpp"
 
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Parser file which parses file I/O and helps
+**compare .txt files with User objects.
+**
+*/
+
 using namespace std;
 
 Parser::Parser(){}
@@ -81,9 +96,6 @@ User* Parser::checkLoginInfo(char* username, char* password) {
 				}
 				user->setAccountNumber(atoi(&token[1]));
 
-				///////////////* TODO SET SOCKET NUMBER */////////////////
-				
-				
 				fp.close();
 				user->printUser();
 				return user; //username and password match return User class.
@@ -223,7 +235,7 @@ bool Parser::changePassword(char* username, char* oldPassword, char* newPassword
 	
 }
 
-bool Parser::banUser(char* username, char* password)
+bool Parser::banUser(char* username)
 {
 	string line;
 	string badUsername = string(username);

@@ -11,6 +11,20 @@
 #include "user.hpp"
 
 using namespace std;
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: User class file for getting setting 
+**and using the object user.
+**
+*/
 
 //CONSTRUCTORS///////////////////////////////////////////////////////////////////////////////////
 User::User()
@@ -77,7 +91,7 @@ void User::setPrivateChat(char* recieverName)
 //DEBUGGING////////////////////////////////////////////////////////////////////////////////////////
 void User::printUser()    
 { 
-	cout << "\tusername: [" << ((_username == "\n") ? _username : "NULL") << "]" << endl <<         
+	cout << "\tusername: [" << _username << "]" << endl <<         
 			"\tpassword: [" << ((_password != NULL) ? _password : "NULL") << "]" << endl <<         
  			"\taccountNumber: [" << ((_accountNumber != 0) ? _accountNumber : 0) << "]" << endl <<
  			"\tadmin: [" << ((_admin != 0) ? "True" : "False") << "]" << endl; 

@@ -10,11 +10,25 @@
 #include <iostream>
 #include "menu.hpp"
 
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Client file that operates the connection with the 
+**server through sockets.
+**
+*/
+
 #define RSIZE 1025
 #define MAXS 2048
 #define PORT 60001 
 #define SA struct sockaddr 
-
 
 using namespace std;
 
@@ -54,7 +68,7 @@ void chat(int sockfd, char* message)
 		bzero(buff,sizeof(buff));
 
 
-		if(read(sockfd, buff, sizeof(buff)) != NULL)
+		if(read(sockfd, buff, sizeof(buff)) != -1)
 		{
 
 		

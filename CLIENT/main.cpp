@@ -15,10 +15,23 @@
 #include "client.hpp"
 #include "menu.hpp"
 
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Main file. This file calls the menu function
+**for the client/User.
+**
+*/
+
 #define BUFFER_SIZE 1024
 
-//g++ -std=c++11 -pthread Untitled1.cpp 
-//with threads: Time taken by program is : 100.000000 sec
 
 using namespace std;
 

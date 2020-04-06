@@ -15,6 +15,23 @@
 #define TRUE 1 
 #define FALSE 0 
 #define PORT 60001 
+
+/*********************
+**Code Developed: Jarrod Resmondo
+**		  Shane Bolding
+**4/5/2020
+**COP4635 Project 2
+**
+*/
+
+
+/****************************
+**Function: Server file that operates with the client
+**and ensures what operation to do with the protocol that
+**the clients send in with their sockets. i.e. 'L0' for log in.
+**
+*/
+
 using namespace std;
 
 int max_clients = 30;
@@ -296,13 +313,12 @@ void direct(int sd,char buffer[MAX], int client_socket[30])
 			{
 				sd = client_socket[i];
 
-				if(sd != 0)
+				if(user[i] != NULL)
 				{
 					cout << "\tSending to " << sd << MET[1] << endl;
 					send(sd,MET[1],strlen(buffer),0);
 				}
 			}
-			
 	
 		}
 		/*
