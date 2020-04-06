@@ -28,31 +28,32 @@ void chat(int sockfd, char* message)
 	int i,n;	
 	struct sockaddr_in servaddr;
 	char userType[2];
-	strcpy(type,"C1%");
 	for (;;) 
 	{ 
+		strcpy(type,"C1%");
+
 		connfd = connect(sockfd, (SA*)&servaddr, sizeof(servaddr)); 
 			
 		printf("[CLIENT]: "); 
 		n = 0; 
+		
 		while ((buff[n++] = getchar()) != '\n') ; 
+		
 		strcat(type,buff);
 		strcat(type,"%");
 		send(sockfd, type, RSIZE, 0);
 		
 		bzero(type,sizeof(type));
 		bzero(buff,sizeof(buff));
-
-
+						
+				
 		if(read(sockfd, buff, sizeof(buff)) != NULL)
 		{
-
-		
 			cout << "[SERVER]: " << buff << endl;  
-			bzero(buff,sizeof(buff));
-		
+			//bzero(buff,sizeof(buff));
 			close(connfd);
 		}
+
 	}
 } 
 
